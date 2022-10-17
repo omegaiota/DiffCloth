@@ -1,0 +1,15 @@
+demoName:wind_tshirt 
+demoIdx:1 
+SceneBbox: min:(-7.0000,-7.0000,-7.0000) max:(7.0000,7.0000,7.0000)
+FPS:90
+Frame Number:251
+CameraPos:(-10.38000,4.24300,12.72000)
+CameraLookAtPos:(0.00000,0.00000,0.00000)
+Collision:ON
+Self-Collision:ON
+Wind:ON
+WindMode:WIND_SIN
+Object Number:3
+0-CLOTH color:(0.20,0.10,0.75)
+1-CLIP color:(0.67,0.40,0.08)
+2-CLIP color:(0.67,0.40,0.08)

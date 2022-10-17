@@ -1,0 +1,522 @@
+Record 0
+============Forward Info:======================
+Total PD Iters:50295
+Total Frames Converged:250
+Forward Total Runtime[ms]:41006.57900
+Loss:9.52254
+============Timer Breakdown:======================
+init[ms]:14.83400		|0.036%
+PD init[ms]:14.35700		|0.035%
+iter init[ms]:767.38200		|1.871%
+projection[ms]:7676.25500		|18.720%
+At_p[ms]:2749.30700		|6.705%
+calc b[ms]:4675.45500		|11.402%
+b_tilde and f[ms]:2249.06000		|5.485%
+CollisionInitVecMap[ms]:3.92400		|0.010%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:83.20500		|0.203%
+ExtColDetect[ms]:4.51700		|0.011%
+SelfColDetectInit[ms]:246.10300		|0.600%
+SelfColDetectInitCell[ms]:26.06500		|0.064%
+contactSorting[ms]:4.61800		|0.011%
+calc r[ms]:138.94500		|0.339%
+solve and update[ms]:18717.97700		|45.646%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:3156.21900		|7.697%
+Convergence Test and Cleanup[ms]:103.21700		|0.252%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016313
+f_wind:(-0.021123,0.056620,0.059688,13.675594,-3.024486)
+Record 1
+============Forward Info:======================
+Total PD Iters:64783
+Total Frames Converged:250
+Forward Total Runtime[ms]:52679.63200
+Loss:5.53898
+============Timer Breakdown:======================
+init[ms]:15.39300		|0.029%
+PD init[ms]:15.10700		|0.029%
+iter init[ms]:995.39200		|1.890%
+projection[ms]:9925.15900		|18.841%
+At_p[ms]:3594.83700		|6.824%
+calc b[ms]:6120.94500		|11.619%
+b_tilde and f[ms]:2922.71800		|5.548%
+CollisionInitVecMap[ms]:4.15200		|0.008%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:100.26800		|0.190%
+ExtColDetect[ms]:5.31400		|0.010%
+SelfColDetectInit[ms]:224.74300		|0.427%
+SelfColDetectInitCell[ms]:27.51300		|0.052%
+contactSorting[ms]:10.17900		|0.019%
+calc r[ms]:281.18300		|0.534%
+solve and update[ms]:23771.87900		|45.125%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:4067.81400		|7.722%
+Convergence Test and Cleanup[ms]:154.59000		|0.293%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016875
+f_wind:(0.100000,-0.100000,-0.100000,13.654503,-3.013408)
+Record 2
+============Forward Info:======================
+Total PD Iters:57345
+Total Frames Converged:250
+Forward Total Runtime[ms]:46322.49700
+Loss:2.01824
+============Timer Breakdown:======================
+init[ms]:15.25700		|0.033%
+PD init[ms]:14.52700		|0.031%
+iter init[ms]:881.09100		|1.902%
+projection[ms]:8863.51500		|19.134%
+At_p[ms]:3141.99700		|6.783%
+calc b[ms]:5345.15300		|11.539%
+b_tilde and f[ms]:2568.80400		|5.545%
+CollisionInitVecMap[ms]:4.44300		|0.010%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:92.52500		|0.200%
+ExtColDetect[ms]:4.96600		|0.011%
+SelfColDetectInit[ms]:210.57200		|0.455%
+SelfColDetectInitCell[ms]:32.54400		|0.070%
+contactSorting[ms]:10.22200		|0.022%
+calc r[ms]:239.89000		|0.518%
+solve and update[ms]:20804.22100		|44.912%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:3561.40600		|7.688%
+Convergence Test and Cleanup[ms]:120.39500		|0.260%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016770
+f_wind:(0.071785,-0.100000,-0.041624,13.658666,-3.015488)
+Record 3
+============Forward Info:======================
+Total PD Iters:55743
+Total Frames Converged:250
+Forward Total Runtime[ms]:44929.37100
+Loss:0.23978
+============Timer Breakdown:======================
+init[ms]:15.22600		|0.034%
+PD init[ms]:15.20800		|0.034%
+iter init[ms]:857.89300		|1.909%
+projection[ms]:8503.66500		|18.927%
+At_p[ms]:3094.14000		|6.887%
+calc b[ms]:5186.22700		|11.543%
+b_tilde and f[ms]:2482.24100		|5.525%
+CollisionInitVecMap[ms]:4.71700		|0.010%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:90.02000		|0.200%
+ExtColDetect[ms]:5.37900		|0.012%
+SelfColDetectInit[ms]:207.61300		|0.462%
+SelfColDetectInitCell[ms]:31.46400		|0.070%
+contactSorting[ms]:9.01900		|0.020%
+calc r[ms]:226.31900		|0.504%
+solve and update[ms]:20224.48700		|45.014%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:3455.08700		|7.690%
+Convergence Test and Cleanup[ms]:122.88500		|0.274%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016627
+f_wind:(0.032471,-0.100000,0.035344,13.664246,-3.018445)
+Record 4
+============Forward Info:======================
+Total PD Iters:54088
+Total Frames Converged:250
+Forward Total Runtime[ms]:44385.91900
+Loss:0.18179
+============Timer Breakdown:======================
+init[ms]:15.32800		|0.035%
+PD init[ms]:14.54000		|0.033%
+iter init[ms]:837.29000		|1.886%
+projection[ms]:8392.86900		|18.909%
+At_p[ms]:2959.51300		|6.668%
+calc b[ms]:5020.24900		|11.310%
+b_tilde and f[ms]:2413.16300		|5.437%
+CollisionInitVecMap[ms]:5.11300		|0.012%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:87.00900		|0.196%
+ExtColDetect[ms]:5.02300		|0.011%
+SelfColDetectInit[ms]:206.92100		|0.466%
+SelfColDetectInitCell[ms]:33.47300		|0.075%
+contactSorting[ms]:9.32400		|0.021%
+calc r[ms]:223.83400		|0.504%
+solve and update[ms]:20260.40500		|45.646%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:3378.37700		|7.611%
+Convergence Test and Cleanup[ms]:159.69500		|0.360%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016641
+f_wind:(0.032137,-0.098164,0.025854,13.663905,-3.018190)
+Record 5
+============Forward Info:======================
+Total PD Iters:52256
+Total Frames Converged:250
+Forward Total Runtime[ms]:61196.56300
+Loss:0.16564
+============Timer Breakdown:======================
+init[ms]:29.08500		|0.048%
+PD init[ms]:21.73800		|0.036%
+iter init[ms]:1403.76800		|2.294%
+projection[ms]:10964.43900		|17.917%
+At_p[ms]:4876.48500		|7.969%
+calc b[ms]:7583.68500		|12.392%
+b_tilde and f[ms]:3485.20100		|5.695%
+CollisionInitVecMap[ms]:7.04900		|0.012%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:121.11100		|0.198%
+ExtColDetect[ms]:5.61500		|0.009%
+SelfColDetectInit[ms]:326.84300		|0.534%
+SelfColDetectInitCell[ms]:54.39200		|0.089%
+contactSorting[ms]:13.79200		|0.023%
+calc r[ms]:297.76300		|0.487%
+solve and update[ms]:25815.45800		|42.184%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:5547.01000		|9.064%
+Convergence Test and Cleanup[ms]:196.69000		|0.321%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016640
+f_wind:(0.026197,-0.093305,0.022397,13.664281,-3.018263)
+Record 6
+============Forward Info:======================
+Total PD Iters:52946
+Total Frames Converged:250
+Forward Total Runtime[ms]:55681.31400
+Loss:0.12423
+============Timer Breakdown:======================
+init[ms]:20.10800		|0.036%
+PD init[ms]:18.78700		|0.034%
+iter init[ms]:1230.16000		|2.209%
+projection[ms]:10117.25900		|18.170%
+At_p[ms]:4307.15100		|7.735%
+calc b[ms]:6769.30600		|12.157%
+b_tilde and f[ms]:3141.26100		|5.641%
+CollisionInitVecMap[ms]:7.11700		|0.013%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:112.92500		|0.203%
+ExtColDetect[ms]:5.69100		|0.010%
+SelfColDetectInit[ms]:280.96100		|0.505%
+SelfColDetectInitCell[ms]:49.34200		|0.089%
+contactSorting[ms]:12.21400		|0.022%
+calc r[ms]:273.45400		|0.491%
+solve and update[ms]:23862.51400		|42.856%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:4877.01400		|8.759%
+Convergence Test and Cleanup[ms]:168.90100		|0.303%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016623
+f_wind:(0.001930,-0.072794,0.016687,13.666295,-3.018806)
+Record 7
+============Forward Info:======================
+Total PD Iters:51147
+Total Frames Converged:250
+Forward Total Runtime[ms]:41487.63600
+Loss:0.08110
+============Timer Breakdown:======================
+init[ms]:15.17900		|0.037%
+PD init[ms]:14.44200		|0.035%
+iter init[ms]:795.55700		|1.918%
+projection[ms]:8068.88100		|19.449%
+At_p[ms]:2789.04200		|6.723%
+calc b[ms]:4728.52900		|11.397%
+b_tilde and f[ms]:2270.94000		|5.474%
+CollisionInitVecMap[ms]:5.54300		|0.013%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:89.39000		|0.215%
+ExtColDetect[ms]:4.72200		|0.011%
+SelfColDetectInit[ms]:198.94400		|0.480%
+SelfColDetectInitCell[ms]:35.16800		|0.085%
+contactSorting[ms]:8.88900		|0.021%
+calc r[ms]:202.34000		|0.488%
+solve and update[ms]:18630.15400		|44.905%
+step primitives[ms]:0.00300		|0.000%
+update[ms]:3161.49300		|7.620%
+Convergence Test and Cleanup[ms]:101.48200		|0.245%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016626
+f_wind:(-0.005607,-0.048571,0.012881,13.668020,-3.019069)
+Record 8
+============Forward Info:======================
+Total PD Iters:45857
+Total Frames Converged:250
+Forward Total Runtime[ms]:37390.41000
+Loss:0.01381
+============Timer Breakdown:======================
+init[ms]:15.32100		|0.041%
+PD init[ms]:14.63500		|0.039%
+iter init[ms]:719.52200		|1.924%
+projection[ms]:7075.90200		|18.924%
+At_p[ms]:2504.77800		|6.699%
+calc b[ms]:4291.63600		|11.478%
+b_tilde and f[ms]:2038.50700		|5.452%
+CollisionInitVecMap[ms]:5.67700		|0.015%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:89.72400		|0.240%
+ExtColDetect[ms]:5.28700		|0.014%
+SelfColDetectInit[ms]:191.50700		|0.512%
+SelfColDetectInitCell[ms]:36.43800		|0.097%
+contactSorting[ms]:7.07600		|0.019%
+calc r[ms]:176.75300		|0.473%
+solve and update[ms]:16990.07500		|45.440%
+step primitives[ms]:0.01400		|0.000%
+update[ms]:2781.94700		|7.440%
+Convergence Test and Cleanup[ms]:133.85000		|0.358%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016647
+f_wind:(-0.003501,-0.000696,0.010406,13.670965,-3.019411)
+Record 9
+============Forward Info:======================
+Total PD Iters:45693
+Total Frames Converged:250
+Forward Total Runtime[ms]:37094.96900
+Loss:0.01224
+============Timer Breakdown:======================
+init[ms]:15.43700		|0.042%
+PD init[ms]:14.65500		|0.040%
+iter init[ms]:724.87900		|1.954%
+projection[ms]:7050.51800		|19.007%
+At_p[ms]:2527.71500		|6.814%
+calc b[ms]:4265.30000		|11.498%
+b_tilde and f[ms]:2051.40900		|5.530%
+CollisionInitVecMap[ms]:5.98800		|0.016%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:91.00000		|0.245%
+ExtColDetect[ms]:4.99700		|0.013%
+SelfColDetectInit[ms]:190.93400		|0.515%
+SelfColDetectInitCell[ms]:36.99200		|0.100%
+contactSorting[ms]:6.57800		|0.018%
+calc r[ms]:159.49500		|0.430%
+solve and update[ms]:16630.50200		|44.832%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2892.46000		|7.797%
+Convergence Test and Cleanup[ms]:97.19600		|0.262%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016655
+f_wind:(0.002554,-0.000563,0.010650,13.670762,-3.019275)
+Record 10
+============Forward Info:======================
+Total PD Iters:45472
+Total Frames Converged:250
+Forward Total Runtime[ms]:37425.82800
+Loss:0.01271
+============Timer Breakdown:======================
+init[ms]:16.24600		|0.043%
+PD init[ms]:15.12800		|0.040%
+iter init[ms]:748.51700		|2.000%
+projection[ms]:7121.99000		|19.030%
+At_p[ms]:2637.37000		|7.047%
+calc b[ms]:4325.17500		|11.557%
+b_tilde and f[ms]:2070.23000		|5.532%
+CollisionInitVecMap[ms]:6.35100		|0.017%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:102.57100		|0.274%
+ExtColDetect[ms]:5.60300		|0.015%
+SelfColDetectInit[ms]:200.02600		|0.534%
+SelfColDetectInitCell[ms]:40.25200		|0.108%
+contactSorting[ms]:7.46800		|0.020%
+calc r[ms]:185.88700		|0.497%
+solve and update[ms]:16707.28600		|44.641%
+step primitives[ms]:0.00300		|0.000%
+update[ms]:2791.52200		|7.459%
+Convergence Test and Cleanup[ms]:135.69300		|0.363%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016668
+f_wind:(0.012150,-0.000052,0.011328,13.670491,-3.019054)
+Record 11
+============Forward Info:======================
+Total PD Iters:45652
+Total Frames Converged:250
+Forward Total Runtime[ms]:37284.77200
+Loss:0.01053
+============Timer Breakdown:======================
+init[ms]:15.64000		|0.042%
+PD init[ms]:15.26300		|0.041%
+iter init[ms]:745.40000		|1.999%
+projection[ms]:6782.34500		|18.191%
+At_p[ms]:2654.67100		|7.120%
+calc b[ms]:4364.80300		|11.707%
+b_tilde and f[ms]:2067.64000		|5.546%
+CollisionInitVecMap[ms]:6.24600		|0.017%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:98.93100		|0.265%
+ExtColDetect[ms]:5.23200		|0.014%
+SelfColDetectInit[ms]:198.44100		|0.532%
+SelfColDetectInitCell[ms]:39.38200		|0.106%
+contactSorting[ms]:7.32600		|0.020%
+calc r[ms]:169.00100		|0.453%
+solve and update[ms]:16800.39400		|45.060%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2889.75000		|7.750%
+Convergence Test and Cleanup[ms]:95.55900		|0.256%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Record 12
+============Forward Info:======================
+Total PD Iters:45999
+Total Frames Converged:250
+Forward Total Runtime[ms]:38133.68600
+Loss:0.01071
+============Timer Breakdown:======================
+init[ms]:15.96400		|0.042%
+PD init[ms]:15.33700		|0.040%
+iter init[ms]:746.49800		|1.958%
+projection[ms]:7348.36200		|19.270%
+At_p[ms]:2852.32000		|7.480%
+calc b[ms]:4338.62500		|11.377%
+b_tilde and f[ms]:2079.62100		|5.454%
+CollisionInitVecMap[ms]:6.80400		|0.018%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:98.75100		|0.259%
+ExtColDetect[ms]:5.77600		|0.015%
+SelfColDetectInit[ms]:199.48900		|0.523%
+SelfColDetectInitCell[ms]:39.91000		|0.105%
+contactSorting[ms]:8.14300		|0.021%
+calc r[ms]:188.53700		|0.494%
+solve and update[ms]:16997.78900		|44.574%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2751.88900		|7.216%
+Convergence Test and Cleanup[ms]:135.28800		|0.355%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016666
+f_wind:(0.010837,-0.000997,0.011460,13.670477,-3.019073)
+Record 13
+============Forward Info:======================
+Total PD Iters:45592
+Total Frames Converged:250
+Forward Total Runtime[ms]:37653.50500
+Loss:0.01099
+============Timer Breakdown:======================
+init[ms]:15.94800		|0.042%
+PD init[ms]:15.19400		|0.040%
+iter init[ms]:754.48200		|2.004%
+projection[ms]:7129.95700		|18.936%
+At_p[ms]:2774.35100		|7.368%
+calc b[ms]:4317.41000		|11.466%
+b_tilde and f[ms]:2067.06100		|5.490%
+CollisionInitVecMap[ms]:6.84200		|0.018%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:100.12800		|0.266%
+ExtColDetect[ms]:5.62800		|0.015%
+SelfColDetectInit[ms]:201.57300		|0.535%
+SelfColDetectInitCell[ms]:40.51900		|0.108%
+contactSorting[ms]:7.03100		|0.019%
+calc r[ms]:191.71200		|0.509%
+solve and update[ms]:16753.33800		|44.493%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2834.49000		|7.528%
+Convergence Test and Cleanup[ms]:128.71800		|0.342%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016659
+f_wind:(0.005124,-0.000579,0.010871,13.670681,-3.019214)
+Record 14
+============Forward Info:======================
+Total PD Iters:45851
+Total Frames Converged:250
+Forward Total Runtime[ms]:37654.64200
+Loss:0.01157
+============Timer Breakdown:======================
+init[ms]:15.90200		|0.042%
+PD init[ms]:15.64500		|0.042%
+iter init[ms]:768.33100		|2.040%
+projection[ms]:7201.62100		|19.125%
+At_p[ms]:2771.49200		|7.360%
+calc b[ms]:4348.16400		|11.547%
+b_tilde and f[ms]:2076.91600		|5.516%
+CollisionInitVecMap[ms]:7.06000		|0.019%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:102.53300		|0.272%
+ExtColDetect[ms]:5.47800		|0.015%
+SelfColDetectInit[ms]:195.88400		|0.520%
+SelfColDetectInitCell[ms]:40.70300		|0.108%
+contactSorting[ms]:7.21700		|0.019%
+calc r[ms]:195.40400		|0.519%
+solve and update[ms]:16634.33400		|44.176%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2830.09900		|7.516%
+Convergence Test and Cleanup[ms]:123.87700		|0.329%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003940,-0.000492,0.010749,13.670723,-3.019243)
+Record 15
+============Forward Info:======================
+Total PD Iters:45609
+Total Frames Converged:250
+Forward Total Runtime[ms]:37966.62500
+Loss:0.01055
+============Timer Breakdown:======================
+init[ms]:16.05700		|0.042%
+PD init[ms]:15.65900		|0.041%
+iter init[ms]:767.55300		|2.022%
+projection[ms]:7028.36800		|18.512%
+At_p[ms]:2767.60100		|7.290%
+calc b[ms]:4310.55300		|11.354%
+b_tilde and f[ms]:2064.60200		|5.438%
+CollisionInitVecMap[ms]:7.02200		|0.018%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:103.00700		|0.271%
+ExtColDetect[ms]:5.93900		|0.016%
+SelfColDetectInit[ms]:195.49500		|0.515%
+SelfColDetectInitCell[ms]:41.53400		|0.109%
+contactSorting[ms]:7.37800		|0.019%
+calc r[ms]:195.48000		|0.515%
+solve and update[ms]:17272.70100		|45.494%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2732.39800		|7.197%
+Convergence Test and Cleanup[ms]:134.69800		|0.355%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Record 16
+============Forward Info:======================
+Total PD Iters:45652
+Total Frames Converged:250
+Forward Total Runtime[ms]:37727.77700
+Loss:0.01053
+============Timer Breakdown:======================
+init[ms]:16.07700		|0.043%
+PD init[ms]:15.30700		|0.041%
+iter init[ms]:783.99900		|2.078%
+projection[ms]:7080.47500		|18.767%
+At_p[ms]:2788.29400		|7.391%
+calc b[ms]:4304.09100		|11.408%
+b_tilde and f[ms]:2074.44300		|5.498%
+CollisionInitVecMap[ms]:7.03800		|0.019%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:103.67100		|0.275%
+ExtColDetect[ms]:5.48100		|0.015%
+SelfColDetectInit[ms]:197.56600		|0.524%
+SelfColDetectInitCell[ms]:41.43500		|0.110%
+contactSorting[ms]:7.43900		|0.020%
+calc r[ms]:201.94700		|0.535%
+solve and update[ms]:16762.41600		|44.430%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2904.70700		|7.699%
+Convergence Test and Cleanup[ms]:113.51700		|0.301%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Record 17
+============Forward Info:======================
+Total PD Iters:45652
+Total Frames Converged:250
+Forward Total Runtime[ms]:38480.24500
+Loss:0.01053
+============Timer Breakdown:======================
+init[ms]:16.13700		|0.042%
+PD init[ms]:15.31300		|0.040%
+iter init[ms]:787.80800		|2.047%
+projection[ms]:7206.55800		|18.728%
+At_p[ms]:3278.59300		|8.520%
+calc b[ms]:4343.95600		|11.289%
+b_tilde and f[ms]:2068.00300		|5.374%
+CollisionInitVecMap[ms]:6.90700		|0.018%
+CollisionInitTable[ms]:0.00000		|0.000%
+CollisionInitMat[ms]:100.42800		|0.261%
+ExtColDetect[ms]:5.61900		|0.015%
+SelfColDetectInit[ms]:196.63400		|0.511%
+SelfColDetectInitCell[ms]:40.69200		|0.106%
+contactSorting[ms]:7.44900		|0.019%
+calc r[ms]:204.99600		|0.533%
+solve and update[ms]:16919.56900		|43.969%
+step primitives[ms]:0.00000		|0.000%
+update[ms]:2841.39800		|7.384%
+Convergence Test and Cleanup[ms]:131.09200		|0.341%
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)

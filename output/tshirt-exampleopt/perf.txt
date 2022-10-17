@@ -1,0 +1,103 @@
+Demo Name:WIND_TSHIRT
+Collision:ON
+Self-Collision:ON
+Wind:ON
+BackwardSolver:Direct
+Total Particles:1426
+Fabric Name:remeshed/T-shirt/tshirt1000-tri.obj
+======Backward iters =====
+Total Jacobi iters:1011
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:584
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:492
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:488
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:489
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:483
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:479
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:480
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+Total Jacobi iters:250
+Jacobi total converged:250
+Total backward props:250
+======Forward Runtime (unit, [s])=====
+iter0:41.00657900
+iter1:52.67963200
+iter2:46.32249700
+iter3:44.92937100
+iter4:44.38591900
+iter5:61.19656300
+iter6:55.68131400
+iter7:41.48763600
+iter8:37.39041000
+iter9:37.09496900
+iter10:37.42582800
+iter11:37.28477200
+iter12:38.13368600
+iter13:37.65350500
+iter14:37.65464200
+iter15:37.96662500
+iter16:37.72777700
+iter17:38.48024500
+======Backward Runtime (unit, [s])=====
+iter0:2.67181100
+iter1:2.62569900
+iter2:2.45293500
+iter3:2.42241200
+iter4:3.38911100
+iter5:4.44716700
+iter6:2.48941300
+iter7:2.35756700
+iter8:2.17854100
+iter9:2.04407600
+iter10:2.54369000
+iter11:2.55771500
+iter12:2.15623900
+iter13:2.13286000
+iter14:2.47437000
+iter15:2.49469600
+iter16:2.54749800
+iter17:2.71255100
+Total Forward Time:764.501970
+Total Backward Time:46.698351
+Total Time:811.200321

@@ -1,0 +1,450 @@
+Record 0
+============Backward Iter Info:======================
+Loss:9.523
+Number of Converged Iter:250
+Total Backward Iter:1011
+Backward Total Runtime[ms]:2671.8110000
+Backward Non Solve Time[ms]:1889.782000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:782.029000
+============Timer Breakdown:======================
+contact_grad[ms]:267.35500		|10.007%
+PD init[ms]:0.50600		|0.019%
+projection[ms]:1557.69000		|58.301%
+delta_P_T[ms]:0.32700		|0.012%
+gradients[ms]:15.75000		|0.589%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:782.02900	|29.270%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00056
+dL/df_wind:(-0.4377,46.2539,16.3408,0.0211,-0.0111)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016313
+f_wind:(-0.021123,0.056620,0.059688,13.675594,-3.024486)
+Corresponding forward Idx: 0
+Record 1
+============Backward Iter Info:======================
+Loss:5.539
+Number of Converged Iter:250
+Total Backward Iter:584
+Backward Total Runtime[ms]:2625.6990000
+Backward Non Solve Time[ms]:2168.882000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:456.817000
+============Timer Breakdown:======================
+contact_grad[ms]:562.74600		|21.432%
+PD init[ms]:0.52000		|0.020%
+projection[ms]:1543.44400		|58.782%
+delta_P_T[ms]:0.32300		|0.012%
+gradients[ms]:15.70200		|0.598%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:456.81700	|17.398%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00125
+dL/df_wind:(1.1846,5.7417,-9.6397,-0.0063,-0.0238)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016875
+f_wind:(0.100000,-0.100000,-0.100000,13.654503,-3.013408)
+Corresponding forward Idx: 1
+Record 2
+============Backward Iter Info:======================
+Loss:2.018
+Number of Converged Iter:250
+Total Backward Iter:492
+Backward Total Runtime[ms]:2452.9350000
+Backward Non Solve Time[ms]:2071.913000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:381.022000
+============Timer Breakdown:======================
+contact_grad[ms]:510.81600		|20.825%
+PD init[ms]:0.51600		|0.021%
+projection[ms]:1505.78600		|61.387%
+delta_P_T[ms]:0.32100		|0.013%
+gradients[ms]:15.37100		|0.627%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:381.02200	|15.533%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00058
+dL/df_wind:(0.7895,0.7613,-5.4316,-0.0041,-0.0013)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016770
+f_wind:(0.071785,-0.100000,-0.041624,13.658666,-3.015488)
+Corresponding forward Idx: 2
+Record 3
+============Backward Iter Info:======================
+Loss:0.240
+Number of Converged Iter:250
+Total Backward Iter:488
+Backward Total Runtime[ms]:2422.4120000
+Backward Non Solve Time[ms]:2039.608000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:382.804000
+============Timer Breakdown:======================
+contact_grad[ms]:486.03700		|20.064%
+PD init[ms]:0.51900		|0.021%
+projection[ms]:1498.10100		|61.843%
+delta_P_T[ms]:0.32900		|0.014%
+gradients[ms]:15.74800		|0.650%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:382.80400	|15.803%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00036
+dL/df_wind:(0.2130,-0.3375,0.9152,-0.0040,-0.0037)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016627
+f_wind:(0.032471,-0.100000,0.035344,13.664246,-3.018445)
+Corresponding forward Idx: 3
+Record 4
+============Backward Iter Info:======================
+Loss:0.182
+Number of Converged Iter:250
+Total Backward Iter:489
+Backward Total Runtime[ms]:3389.1110000
+Backward Non Solve Time[ms]:2872.102000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:517.009000
+============Timer Breakdown:======================
+contact_grad[ms]:847.33100		|25.002%
+PD init[ms]:0.82900		|0.024%
+projection[ms]:1955.08200		|57.687%
+delta_P_T[ms]:0.42200		|0.012%
+gradients[ms]:21.52000		|0.635%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:517.00900	|15.255%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00035
+dL/df_wind:(0.2264,-0.4896,0.1060,-0.0041,-0.0037)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016641
+f_wind:(0.032137,-0.098164,0.025854,13.663905,-3.018190)
+Corresponding forward Idx: 4
+Record 5
+============Backward Iter Info:======================
+Loss:0.166
+Number of Converged Iter:250
+Total Backward Iter:483
+Backward Total Runtime[ms]:4447.1670000
+Backward Non Solve Time[ms]:3875.668000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:571.499000
+============Timer Breakdown:======================
+contact_grad[ms]:952.70400		|21.423%
+PD init[ms]:0.92300		|0.021%
+projection[ms]:2710.75800		|60.955%
+delta_P_T[ms]:0.48600		|0.011%
+gradients[ms]:24.41400		|0.549%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:571.49900	|12.851%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00033
+dL/df_wind:(0.1607,-0.5055,-0.1678,-0.0039,-0.0035)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016640
+f_wind:(0.026197,-0.093305,0.022397,13.664281,-3.018263)
+Corresponding forward Idx: 5
+Record 6
+============Backward Iter Info:======================
+Loss:0.124
+Number of Converged Iter:250
+Total Backward Iter:479
+Backward Total Runtime[ms]:2489.4130000
+Backward Non Solve Time[ms]:2109.068000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:380.345000
+============Timer Breakdown:======================
+contact_grad[ms]:473.61700		|19.025%
+PD init[ms]:0.51300		|0.021%
+projection[ms]:1582.35900		|63.564%
+delta_P_T[ms]:0.38200		|0.015%
+gradients[ms]:15.72600		|0.632%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:380.34500	|15.279%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00022
+dL/df_wind:(-0.1162,-0.4553,-0.4054,-0.0025,-0.0022)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016623
+f_wind:(0.001930,-0.072794,0.016687,13.666295,-3.018806)
+Corresponding forward Idx: 6
+Record 7
+============Backward Iter Info:======================
+Loss:0.081
+Number of Converged Iter:250
+Total Backward Iter:480
+Backward Total Runtime[ms]:2357.5670000
+Backward Non Solve Time[ms]:1977.719000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:379.848000
+============Timer Breakdown:======================
+contact_grad[ms]:459.26100		|19.480%
+PD init[ms]:0.55500		|0.024%
+projection[ms]:1466.30600		|62.196%
+delta_P_T[ms]:0.34900		|0.015%
+gradients[ms]:15.55100		|0.660%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:379.84800	|16.112%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00013
+dL/df_wind:(-0.1972,-0.3528,-0.5287,-0.0011,-0.0009)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016626
+f_wind:(-0.005607,-0.048571,0.012881,13.668020,-3.019069)
+Corresponding forward Idx: 7
+Record 8
+============Backward Iter Info:======================
+Loss:0.014
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2178.5410000
+Backward Non Solve Time[ms]:1975.909000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:202.632000
+============Timer Breakdown:======================
+contact_grad[ms]:381.76700		|17.524%
+PD init[ms]:0.52500		|0.024%
+projection[ms]:1538.82300		|70.635%
+delta_P_T[ms]:0.37700		|0.017%
+gradients[ms]:16.22300		|0.745%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:202.63200	|9.301%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.1113,-0.0121,-0.0535,0.0001,-0.0000)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016647
+f_wind:(-0.003501,-0.000696,0.010406,13.670965,-3.019411)
+Corresponding forward Idx: 8
+Record 9
+============Backward Iter Info:======================
+Loss:0.012
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2044.0760000
+Backward Non Solve Time[ms]:1840.736000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:203.340000
+============Timer Breakdown:======================
+contact_grad[ms]:346.64600		|16.959%
+PD init[ms]:0.50900		|0.025%
+projection[ms]:1442.30500		|70.560%
+delta_P_T[ms]:0.32100		|0.016%
+gradients[ms]:16.26400		|0.796%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:203.34000	|9.948%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0680,-0.0096,-0.0433,-0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016655
+f_wind:(0.002554,-0.000563,0.010650,13.670762,-3.019275)
+Corresponding forward Idx: 9
+Record 10
+============Backward Iter Info:======================
+Loss:0.013
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2543.6900000
+Backward Non Solve Time[ms]:2341.008000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:202.682000
+============Timer Breakdown:======================
+contact_grad[ms]:366.58500		|14.412%
+PD init[ms]:0.51100		|0.020%
+projection[ms]:1839.13200		|72.302%
+delta_P_T[ms]:0.36000		|0.014%
+gradients[ms]:16.14800		|0.635%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:202.68200	|7.968%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:0.00000
+dL/df_wind:(0.0019,0.0015,-0.0038,0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016668
+f_wind:(0.012150,-0.000052,0.011328,13.670491,-3.019054)
+Corresponding forward Idx: 10
+Record 11
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2557.7150000
+Backward Non Solve Time[ms]:2355.337000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:202.378000
+============Timer Breakdown:======================
+contact_grad[ms]:368.78900		|14.419%
+PD init[ms]:0.53700		|0.021%
+projection[ms]:1846.40300		|72.190%
+delta_P_T[ms]:0.41000		|0.016%
+gradients[ms]:16.60900		|0.649%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:202.37800	|7.912%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0567,-0.0074,-0.0377,0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Corresponding forward Idx: 11
+Record 12
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2156.2390000
+Backward Non Solve Time[ms]:1955.574000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:200.665000
+============Timer Breakdown:======================
+contact_grad[ms]:382.57500		|17.743%
+PD init[ms]:0.51900		|0.024%
+projection[ms]:1520.21000		|70.503%
+delta_P_T[ms]:0.35400		|0.016%
+gradients[ms]:15.83400		|0.734%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:200.66500	|9.306%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0049,-0.0020,-0.0007,0.0001,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016666
+f_wind:(0.010837,-0.000997,0.011460,13.670477,-3.019073)
+Corresponding forward Idx: 12
+Record 13
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2132.8600000
+Backward Non Solve Time[ms]:1928.853000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:204.007000
+============Timer Breakdown:======================
+contact_grad[ms]:367.39800		|17.226%
+PD init[ms]:0.55300		|0.026%
+projection[ms]:1504.13300		|70.522%
+delta_P_T[ms]:0.39000		|0.018%
+gradients[ms]:16.45900		|0.772%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:204.00700	|9.565%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0506,-0.0066,-0.0315,-0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016659
+f_wind:(0.005124,-0.000579,0.010871,13.670681,-3.019214)
+Corresponding forward Idx: 13
+Record 14
+============Backward Iter Info:======================
+Loss:0.012
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2474.3700000
+Backward Non Solve Time[ms]:2271.829000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:202.541000
+============Timer Breakdown:======================
+contact_grad[ms]:361.54100		|14.611%
+PD init[ms]:0.53300		|0.022%
+projection[ms]:1790.14700		|72.348%
+delta_P_T[ms]:0.40000		|0.016%
+gradients[ms]:16.75500		|0.677%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:202.54100	|8.186%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0572,-0.0080,-0.0383,-0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003940,-0.000492,0.010749,13.670723,-3.019243)
+Corresponding forward Idx: 14
+Record 15
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2494.6960000
+Backward Non Solve Time[ms]:2290.962000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:203.734000
+============Timer Breakdown:======================
+contact_grad[ms]:371.87500		|14.907%
+PD init[ms]:0.54100		|0.022%
+projection[ms]:1795.04400		|71.954%
+delta_P_T[ms]:0.41200		|0.017%
+gradients[ms]:16.61900		|0.666%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:203.73400	|8.167%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0567,-0.0074,-0.0377,0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Corresponding forward Idx: 15
+Record 16
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2547.4980000
+Backward Non Solve Time[ms]:2344.005000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:203.493000
+============Timer Breakdown:======================
+contact_grad[ms]:379.94900		|14.915%
+PD init[ms]:0.56300		|0.022%
+projection[ms]:1832.79900		|71.945%
+delta_P_T[ms]:0.39800		|0.016%
+gradients[ms]:16.61300		|0.652%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:203.49300	|7.988%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0567,-0.0074,-0.0377,0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Corresponding forward Idx: 16
+Record 17
+============Backward Iter Info:======================
+Loss:0.011
+Number of Converged Iter:250
+Total Backward Iter:250
+Backward Total Runtime[ms]:2712.5510000
+Backward Non Solve Time[ms]:2505.281000
+Backward Direct-Solve Time[ms]:0.000000
+Backward Iter-Solve Time[ms]:207.270000
+============Timer Breakdown:======================
+contact_grad[ms]:377.27000		|13.908%
+PD init[ms]:0.59000		|0.022%
+projection[ms]:1973.43600		|72.752%
+delta_P_T[ms]:0.39400		|0.015%
+gradients[ms]:16.43300		|0.606%
+Direct-Solve[ms]:0.00000	|0.000%
+Iter-Solve[ms]:207.27000	|7.641%
+
+============Gradient Info:======================
+dL/dk_CONSTRAINT_TRIANGLE:-0.00000
+dL/df_wind:(-0.0567,-0.0074,-0.0377,0.0000,-0.0001)
+============Parameter Info:======================
+k_CONSTRAINT_TRIANGLE:556.016657
+f_wind:(0.003911,-0.000490,0.010746,13.670724,-3.019244)
+Corresponding forward Idx: 17
