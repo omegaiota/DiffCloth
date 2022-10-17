@@ -1,0 +1,2 @@
+randSeed: 2
+optimizer: (1, 'Adam')

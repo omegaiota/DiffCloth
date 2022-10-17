@@ -1,0 +1,8 @@
+============Task Configuration:======================
+Forward Accuracy:0.00000001000
+Backward Accuracy:0.00050000000
+Rand seed:1804289383
+Srand seed:0
+Optimizer:LBFGS
+CONSTRAINT_TRIANGLE: ON
+f_wind: ON
