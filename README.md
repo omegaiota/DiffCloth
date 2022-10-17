@@ -50,7 +50,7 @@ The progress of the optimization is saved into the `output/` directory of the ro
 Build Python Binding:
 
 - Install anaconda for virtual environment.
-- In project main folder `OmegaEngine`, run `python setup.py install` to install the python binding package. Rerun this command if you modify the CPP code.
+- In project root folder, run `python setup.py install` to install the python binding package. Rerun this command if you modify the CPP code.
 - Create conda virtual environment: `conda env create python=3.8 --file environment.yml`, and activate it through `conda activate diffcloth`
 
 Train/Test Hat Controller example:
@@ -61,9 +61,11 @@ Train/Test Hat Controller example:
 
 Simulations are saved to `output/` directory of the root folder.  
 
+### Note
+Feel free to contact me or creating a Github issue if you have questions regarding setting up the repository, running examples or setting up new examples. 
 
 ### Citation
-
+Please consider citing our research if your find our research helpful:
     @article{li2022diffcloth,
         author = {Li, Yifei and Du, Tao and Wu, Kui and Xu, Jie and Matusik, Wojciech},
         title = {DiffCloth: Differentiable Cloth Simulation with Dry Frictional Contact},
