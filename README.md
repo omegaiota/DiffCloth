@@ -66,6 +66,7 @@ Feel free to contact me or creating a Github issue if you have questions regardi
 
 ### Citation
 Please consider citing our research if your find our research helpful:
+
     @article{li2022diffcloth,
         author = {Li, Yifei and Du, Tao and Wu, Kui and Xu, Jie and Matusik, Wojciech},
         title = {DiffCloth: Differentiable Cloth Simulation with Dry Frictional Contact},
