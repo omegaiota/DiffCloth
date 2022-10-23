@@ -1,13 +1,18 @@
 # DiffCloth
 Code repository for our paper [DiffCloth: Differentiable Cloth Simulation with Dry Frictional Contact](https://people.csail.mit.edu/liyifei/publication/diffcloth-differentiable-cloth-simulator/)
-![](gifs/featured.png)
+![](gifs/teaser.jpeg)
+
+[📃 Paper](https://people.csail.mit.edu/liyifei/uploads/diffcloth-highres-tog.pdf) | [🌍 Project](https://people.csail.mit.edu/liyifei/publication/diffcloth/)
+
+### Tested Operating Systems
+Ubuntu 22.04 | Mac OS 12
 
 ### 1. Download the repo:
 **Make sure to use the `--recursive` option** to install the dependencies
 
 `git clone --recursive https://github.com/omegaiota/DiffCloth.git`
 
-### 2. Build CPP code:
+### 2. Build CPP code with Cmake:
 From the top directory:
 ```
 mkdir build
@@ -59,13 +64,13 @@ Train/Test Hat Controller example:
 * Train network: run `python hatController.py --render`
 * Resume train: run `python hatController.py --train_resume --load_expname [expName] --load_epoch [epochNum]`
 
-Simulations are saved to `output/` directory of the root folder.  
+Simulations are saved to the `output/` directory of the root folder.  
 
 ### Note
-Feel free to contact me or creating a Github issue if you have questions regarding setting up the repository, running examples or setting up new examples. 
+Feel free to contact me at liyifei@csail.mit.edu or create a Github issue if you have questions regarding setting up the repository, running examples or adding new examples. 
 
 ### Citation
-Please consider citing our paper if your find our research helpful:
+Please consider citing our paper if your find our research or this codebase helpful:
 
     @article{Li2022diffcloth,
     author = {Li, Yifei and Du, Tao and Wu, Kui and Xu, Jie and Matusik, Wojciech},
