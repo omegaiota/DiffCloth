@@ -51,21 +51,6 @@ make
 
 The progress of the optimization is saved into the `output/` directory of the root folder. Intermediate progress are visualized using the custom written OpenGL viewer.
 
-### 4. Build Python Binding and Run Hat Controller example:
-Build Python Binding:
-
-- Install anaconda for virtual environment.
-- In project root folder, run `python setup.py install` to install the python binding package. Rerun this command if you modify the CPP code.
-- Create conda virtual environment: `conda env create python=3.8 --file environment.yml`, and activate it through `conda activate diffcloth`
-
-Train/Test Hat Controller example:
-- Navigate to `src/python_code`
-* Test pretrained network: run `python hatController.py --eval --render --load_expname 20210809-trainedBest`
-* Train network: run `python hatController.py --render`
-* Resume train: run `python hatController.py --train_resume --load_expname [expName] --load_epoch [epochNum]`
-
-Simulations are saved to the `output/` directory of the root folder.  
-
 ### Note
 Feel free to contact me at liyifei@csail.mit.edu or create a Github issue if you have questions regarding setting up the repository, running examples or adding new examples. 
 

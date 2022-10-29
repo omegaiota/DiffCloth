@@ -131,29 +131,6 @@ target_link_libraries(${EXECUTABLE_NAME} nanogui ${NANOGUI_EXTRA_LIBS})
 target_link_libraries(${EXECUTABLE_NAME} OpenMP::OpenMP_CXX)
 target_include_directories(${EXECUTABLE_NAME} PRIVATE ${EXTERNAL_HEADER})
 
-# python binding
-if (APPLE)
-    set(PYTHON_INCLUDE_DIR "$ENV{HOME}/opt/anaconda3/include/python3.8")
-    set(PYTHON_LIBRARIES "$ENV{HOME}/opt/anaconda3/lib/libpython3.8.dylib")
-endif ()
-
-#find_package(PythonLibs 3.8 REQUIRED )
-find_package(Python 3.8 COMPONENTS Interpreter Development)
-#message(${PYTHON_INCLUDE_DIRS})
-include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(external/pybind11/include)
-add_subdirectory(external/pybind11)
-
-
-pybind11_add_module(diffcloth_py "src/code/python_interface.cpp" ${HEADERS} ${SRCFILES})
-if (APPLE)
-  target_link_libraries(diffcloth_py PRIVATE "-undefined dynamic_lookup")
-endif ()
-# target_link_libraries(diffcloth_py PRIVATE ${PYTHON_LIBRARIES})
-target_link_libraries(diffcloth_py PRIVATE pybind11::module)
-target_link_libraries(diffcloth_py PRIVATE nanogui ${NANOGUI_EXTRA_LIBS})
-target_link_libraries(diffcloth_py  PRIVATE OpenMP::OpenMP_CXX)
-target_include_directories(diffcloth_py PRIVATE ${EXTERNAL_HEADER})
 
 
 
