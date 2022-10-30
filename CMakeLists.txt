@@ -46,7 +46,7 @@ set(NANOGUI_INSTALL OFF CACHE BOOL " " FORCE)
 
 add_definitions(-DSOURCE_PATH=\"${CMAKE_CURRENT_SOURCE_DIR}\")
 
-if (WIN32)
+if (WIN32 OR MINGW)
     set(_GLFW_WIN32 1)
     add_definitions(-D_GLFW_WIN32=1)
     message(STATUS "Using Win32 for window creation")
@@ -128,6 +128,7 @@ add_executable(${EXECUTABLE_NAME} ${SRCFILES}  )
 
 
 target_link_libraries(${EXECUTABLE_NAME} nanogui ${NANOGUI_EXTRA_LIBS})
+target_link_libraries(${EXECUTABLE_NAME} glfw)
 target_link_libraries(${EXECUTABLE_NAME} OpenMP::OpenMP_CXX)
 target_include_directories(${EXECUTABLE_NAME} PRIVATE ${EXTERNAL_HEADER})
 

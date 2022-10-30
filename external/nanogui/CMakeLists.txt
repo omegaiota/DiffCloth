@@ -17,11 +17,7 @@ if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw/src")
     "by calling \"git submodule update --init --recursive\"")
 endif()
 
-if (WIN32)
-  set(NANOGUI_USE_GLAD_DEFAULT ON)
-else()
-  set(NANOGUI_USE_GLAD_DEFAULT OFF)
-endif()
+set(NANOGUI_USE_GLAD_DEFAULT OFF)
 
 option(NANOGUI_BUILD_EXAMPLE "Build NanoGUI example application?" ON)
 option(NANOGUI_BUILD_SHARED  "Build NanoGUI as a shared library?" ON)
@@ -203,15 +199,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 if (NANOGUI_USE_GLAD)
-#   Build and include GLAD on Windows
   list(APPEND LIBNANOGUI_EXTRA_SOURCE
      "${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/src/glad.c"
 	 "${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/include/glad/glad.h"
 	 "${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/include/KHR/khrplatform.h")
-#  list(APPEND LIBNANOGUI_EXTRA_SOURCE
-#          "${PROJECT_SOURCE_DIR}/external/glad/src/glad.c"
-#          "${PROJECT_SOURCE_DIR}/dependencies/include/glad/glad.h")
-#          "${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/include/KHR/khrplatform.h")
   if (MSVC)
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/ext/glad/src/glad.c"
       PROPERTIES COMPILE_FLAGS "/wd4055 ")

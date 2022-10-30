@@ -5,10 +5,6 @@
 #ifndef DIFFCLOTH_OPTIMIZATIONTASKSETUP_H
 #define DIFFCLOTH_OPTIMIZATIONTASKSETUP_H
 
+class OptimizationTaskSetup {};
 
-class OptimizationTaskSetup {
-
-};
-
-
-#endif //DIFFCLOTH_OPTIMIZATIONTASKSETUP_H
+#endif // DIFFCLOTH_OPTIMIZATIONTASKSETUP_H

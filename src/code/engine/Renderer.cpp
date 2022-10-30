@@ -13,12 +13,11 @@ int Renderer::gridLength = 0;
 bool Renderer::gridInitialized = false;
 bool Renderer::fixedPointInitialized = false;
 
-
 static Vec3d posToHashColor(Vec3d in) {
   in *= 27644437;
   in += Vec3d(28497324, 123874, 192384);
 
-  Vec3i out((int) in[0], (int) in[1], (int) in[2]);
+  Vec3i out((int)in[0], (int)in[1], (int)in[2]);
   out[0] %= 6691;
   out[1] %= 6763;
   out[2] %= 7723;
@@ -26,7 +25,9 @@ static Vec3d posToHashColor(Vec3d in) {
   return Vec3d(out[0] * 1.0 / 6691, out[1] * 1.0 / 6763, out[2] * 1.0 / 7723);
 }
 
-void Renderer::useClothShaderAndSetUniforms(Simulation *msSystem, Shader *clothShader, Viewer &window) {
+void Renderer::useClothShaderAndSetUniforms(Simulation *msSystem,
+                                            Shader *clothShader,
+                                            Viewer &window) {
   clothShader->use();
   clothShader->setVec3("objectColor", 1.0f, 0.3f, 0.31f);
   clothShader->setVec3("colorFabric", msSystem->sceneConfig.fabric.color);
@@ -43,32 +44,37 @@ void Renderer::useClothShaderAndSetUniforms(Simulation *msSystem, Shader *clothS
   clothShader->setVec3("colorWireframe", 1.0f, 1.0f, 1.0f);
   clothShader->setMat4("view", window.camera.getViewMat());
   clothShader->setMat4("projection", window.getProjectionMat());
-  clothShader->setMat4("model",
-                       glm::translate(glm::mat4(1.0f),
-                                      glm::vec3(msSystem->systemCenter[0], msSystem->systemCenter[1],
+  clothShader->setMat4(
+      "model",
+      glm::translate(glm::mat4(1.0f), glm::vec3(msSystem->systemCenter[0],
+                                                msSystem->systemCenter[1],
                                                 msSystem->systemCenter[2])));
   clothShader->setInt("renderMode", window.myRendermode);
   clothShader->setVec3("lightColor", glm::vec3(1.0, 1.0, 1.0));
   clothShader->setVec3("camPos", window.camera.getCamPos());
-  clothShader->setVec3("systemCenter",
-                       glm::vec3(msSystem->systemCenter[0], msSystem->systemCenter[1], msSystem->systemCenter[2]));
+  clothShader->setVec3("systemCenter", glm::vec3(msSystem->systemCenter[0],
+                                                 msSystem->systemCenter[1],
+                                                 msSystem->systemCenter[2]));
   clothShader->setBool("visualizeCollision", window.visualizeCollision);
 }
 
-void Renderer::useSimpleShaderAndSetUniforms(Simulation *msSystem, Shader *simpleShader, Viewer &window) {
+void Renderer::useSimpleShaderAndSetUniforms(Simulation *msSystem,
+                                             Shader *simpleShader,
+                                             Viewer &window) {
   simpleShader->use();
   simpleShader->setMat4("view", window.camera.getViewMat());
   simpleShader->setMat4("projection", window.getProjectionMat());
-  simpleShader->setMat4("model",
-                        glm::translate(glm::mat4(1.0f),
-                                       glm::vec3(msSystem->systemCenter[0], msSystem->systemCenter[1],
-                                                 msSystem->systemCenter[2])));
+  simpleShader->setMat4(
+      "model",
+      glm::translate(glm::mat4(1.0f), glm::vec3(msSystem->systemCenter[0],
+                                                msSystem->systemCenter[1],
+                                                msSystem->systemCenter[2])));
   simpleShader->setInt("renderMode", 0);
 }
 
-void
-Renderer::fillTriangleToVertexArr(Triangle &m, float *vertexArr, int offset, int numFields, Vec3d color, Vec3d center,
-                                  bool useVertexNormal) {
+void Renderer::fillTriangleToVertexArr(Triangle &m, float *vertexArr,
+                                       int offset, int numFields, Vec3d color,
+                                       Vec3d center, bool useVertexNormal) {
   // {pos(3),texCorrd(2),velocity(3),override?(1),color(3),normal(3)}
   Particle *vs[] = {m.p0(), m.p1(), m.p2()};
   for (int j = 0; j < 3; j++) {
@@ -84,13 +90,14 @@ Renderer::fillTriangleToVertexArr(Triangle &m, float *vertexArr, int offset, int
       fillArrayWithVec3(vertexArr, vs[j]->normal, startIdx + 12); // 9-11
     else
       fillArrayWithVec3(vertexArr, m.normal, startIdx + 12);
-
   }
 }
 
-void Renderer::renderMesh(Simulation *msSystem, Shader *clothShader, Viewer &window, Simulation::FileMesh &model,
-                          Vec3d color,
-                          std::vector<Vec3d> center, Vec3d initialDir, Vec3d pointDir, bool shading, bool lighting) {
+void Renderer::renderMesh(Simulation *msSystem, Shader *clothShader,
+                          Viewer &window, Simulation::FileMesh &model,
+                          Vec3d color, std::vector<Vec3d> center,
+                          Vec3d initialDir, Vec3d pointDir, bool shading,
+                          bool lighting) {
   useClothShaderAndSetUniforms(msSystem, clothShader, window);
 
   clothShader->setBool("shading", shading);
@@ -100,9 +107,12 @@ void Renderer::renderMesh(Simulation *msSystem, Shader *clothShader, Viewer &win
 
   if ((pointDir - initialDir).norm() > 1e-5) {
     Vec3d perp = initialDir.cross(pointDir);
-    double angle = std::acos(pointDir.dot(initialDir) / pointDir.norm() / initialDir.norm());
-    Vec3d rotationDegrees = dirVecToAngleDegrees(pointDir) - dirVecToAngleDegrees(initialDir);
-    rotationXYZ = glm::rotate(glm::mat4(1.0f), (float) angle, glm::vec3(perp[0], perp[1], perp[2]));
+    double angle = std::acos(pointDir.dot(initialDir) / pointDir.norm() /
+                             initialDir.norm());
+    Vec3d rotationDegrees =
+        dirVecToAngleDegrees(pointDir) - dirVecToAngleDegrees(initialDir);
+    rotationXYZ = glm::rotate(glm::mat4(1.0f), (float)angle,
+                              glm::vec3(perp[0], perp[1], perp[2]));
   }
 
   int fieldNum = 16;
@@ -114,29 +124,28 @@ void Renderer::renderMesh(Simulation *msSystem, Shader *clothShader, Viewer &win
     for (int j = 0; j < 3; j++) {
       int startIdx = i * (fieldNum * 3) + j * fieldNum;
       Vec3d p = model.points[model.triangles[i][j]];
-      fillArrayWithVec3(vertexArr, p, startIdx + 0); // 0-2
+      fillArrayWithVec3(vertexArr, p, startIdx + 0);  // 0-2
       vertexArr[startIdx + 3] = (j == 1) ? 1.0 : 0.0; // (0, 0 ), (1, 0), (0, 1)
       vertexArr[startIdx + 4] = (j >= 2) ? 1.0 : 0.0;
       fillArrayWithVec3(vertexArr, Vec3d(0, 0, 0), startIdx + 5); // 5-7
       vertexArr[startIdx + 8] = 1;
       fillArrayWithVec3(vertexArr, color, startIdx + 9); // 9-11
-      fillArrayWithVec3(vertexArr, model.normals[model.triangles[i][j]], startIdx + 12);
-
+      fillArrayWithVec3(vertexArr, model.normals[model.triangles[i][j]],
+                        startIdx + 12);
     }
   }
 
-  VertexArrayObject vertexVAO = VertexArrayObject((float *) vertexArr,
-                                                  3 * totalTriangles,
-                                                  fieldNum * sizeof(float));
+  VertexArrayObject vertexVAO = VertexArrayObject(
+      (float *)vertexArr, 3 * totalTriangles, fieldNum * sizeof(float));
   std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3, 1};
   vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
-
 
   for (Vec3d &c : center) {
     vertexVAO.use();
     Vec3d totalTranslate = msSystem->systemCenter + c;
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f),
-                                           glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
+    glm::mat4 translation = glm::translate(
+        glm::mat4(1.0f),
+        glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
     clothShader->setMat4("model", translation * rotationXYZ);
 
     glDrawArrays(GL_TRIANGLES, 0, 3 * totalTriangles);
@@ -144,14 +153,14 @@ void Renderer::renderMesh(Simulation *msSystem, Shader *clothShader, Viewer &win
   }
 }
 
-
-void Renderer::renderNormals(Simulation *msSystem, Shader *clothShader, Viewer &window, Simulation::FileMesh &model, std::vector<std::pair<Vec3d, Vec3d>> &pointsAndDirs, Vec3d initialDir) {
+void Renderer::renderNormals(
+    Simulation *msSystem, Shader *clothShader, Viewer &window,
+    Simulation::FileMesh &model,
+    std::vector<std::pair<Vec3d, Vec3d>> &pointsAndDirs, Vec3d initialDir) {
   useClothShaderAndSetUniforms(msSystem, clothShader, window);
 
   clothShader->setBool("shading", false);
   clothShader->setBool("lighting", false);
-
-
 
   int fieldNum = 16;
   int totalTriangles = model.triangles.size();
@@ -162,23 +171,21 @@ void Renderer::renderNormals(Simulation *msSystem, Shader *clothShader, Viewer &
     for (int j = 0; j < 3; j++) {
       int startIdx = i * (fieldNum * 3) + j * fieldNum;
       Vec3d p = model.points[model.triangles[i][j]];
-      fillArrayWithVec3(vertexArr, p, startIdx + 0); // 0-2
+      fillArrayWithVec3(vertexArr, p, startIdx + 0);  // 0-2
       vertexArr[startIdx + 3] = (j == 1) ? 1.0 : 0.0; // (0, 0 ), (1, 0), (0, 1)
       vertexArr[startIdx + 4] = (j >= 2) ? 1.0 : 0.0;
       fillArrayWithVec3(vertexArr, Vec3d(0, 0, 0), startIdx + 5); // 5-7
-      vertexArr[startIdx + 8] = 0; // use color1
-      fillArrayWithVec3(vertexArr, Vec3d(0,0,1), startIdx + 9); // 9-11
-      fillArrayWithVec3(vertexArr, model.normals[model.triangles[i][j]], startIdx + 12);
-
+      vertexArr[startIdx + 8] = 0;                                // use color1
+      fillArrayWithVec3(vertexArr, Vec3d(0, 0, 1), startIdx + 9); // 9-11
+      fillArrayWithVec3(vertexArr, model.normals[model.triangles[i][j]],
+                        startIdx + 12);
     }
   }
 
-  VertexArrayObject vertexVAO = VertexArrayObject((float *) vertexArr,
-                                                  3 * totalTriangles,
-                                                  fieldNum * sizeof(float));
+  VertexArrayObject vertexVAO = VertexArrayObject(
+      (float *)vertexArr, 3 * totalTriangles, fieldNum * sizeof(float));
   std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3, 1};
   vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
-
 
   for (std::pair<Vec3d, Vec3d> &instance : pointsAndDirs) {
     Vec3d c = instance.first;
@@ -188,15 +195,19 @@ void Renderer::renderNormals(Simulation *msSystem, Shader *clothShader, Viewer &
     glm::mat4 rotationXYZ = glm::mat4(1.0f);
     if ((pointDir - initialDir).norm() > 1e-5) {
       Vec3d perp = initialDir.cross(pointDir);
-      double angle = std::acos(pointDir.dot(initialDir) / pointDir.norm() / initialDir.norm());
-      Vec3d rotationDegrees = dirVecToAngleDegrees(pointDir) - dirVecToAngleDegrees(initialDir);
-      rotationXYZ = glm::rotate(glm::mat4(1.0f), (float) angle, glm::vec3(perp[0], perp[1], perp[2]));
+      double angle = std::acos(pointDir.dot(initialDir) / pointDir.norm() /
+                               initialDir.norm());
+      Vec3d rotationDegrees =
+          dirVecToAngleDegrees(pointDir) - dirVecToAngleDegrees(initialDir);
+      rotationXYZ = glm::rotate(glm::mat4(1.0f), (float)angle,
+                                glm::vec3(perp[0], perp[1], perp[2]));
     }
 
     vertexVAO.use();
     Vec3d totalTranslate = msSystem->systemCenter + c;
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f),
-                                           glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
+    glm::mat4 translation = glm::translate(
+        glm::mat4(1.0f),
+        glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
     clothShader->setMat4("model", translation * rotationXYZ);
     clothShader->setInt("renderMode", 1);
 
@@ -209,9 +220,10 @@ void Renderer::renderNormals(Simulation *msSystem, Shader *clothShader, Viewer &
   }
 }
 
-
-void Renderer::renderFixedPoints(Simulation *msSystem, Shader *clothShader, Viewer &window, std::vector<Vec3d> &points,
-                                 Vec3d color, bool renderClips, bool useHashColor) {
+void Renderer::renderFixedPoints(Simulation *msSystem, Shader *clothShader,
+                                 Viewer &window, std::vector<Vec3d> &points,
+                                 Vec3d color, bool renderClips,
+                                 bool useHashColor) {
   if (renderClips) {
     std::vector<Vec3d> pointsWithOffset;
     for (Vec3d &p : points) {
@@ -226,17 +238,21 @@ void Renderer::renderFixedPoints(Simulation *msSystem, Shader *clothShader, View
   clothShader->setBool("lighting", false);
 
   int fieldNum = 16;
-  float vertexArr[3 * fieldNum * msSystem->sphereForFixedPointRender.mesh.size()];
+  float
+      vertexArr[3 * fieldNum * msSystem->sphereForFixedPointRender.mesh.size()];
 
   for (int i = 0; i < msSystem->sphereForFixedPointRender.mesh.size(); i++) {
     // {pos(3),texCorrd(2),velocity(3),override?(1),color(3),normal(3)}
-    fillTriangleToVertexArr(msSystem->sphereForFixedPointRender.mesh[i], vertexArr, i * (fieldNum * 3), fieldNum,
-                            color, Vec3d(0, 0, 0), true); // TODO: should this be vertex normal?
+    fillTriangleToVertexArr(msSystem->sphereForFixedPointRender.mesh[i],
+                            vertexArr, i * (fieldNum * 3), fieldNum, color,
+                            Vec3d(0, 0, 0),
+                            true); // TODO: should this be vertex normal?
   }
 
-  VertexArrayObject fixedPointMeshVAO = VertexArrayObject((float *) vertexArr,
-                                                          1 * 3 * msSystem->sphereForFixedPointRender.mesh.size(),
-                                                          fieldNum * sizeof(float));
+  VertexArrayObject fixedPointMeshVAO =
+      VertexArrayObject((float *)vertexArr,
+                        1 * 3 * msSystem->sphereForFixedPointRender.mesh.size(),
+                        fieldNum * sizeof(float));
   std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3, 1};
   vertexArrAddAtrribInfo(fixedPointMeshVAO, fieldComponents);
   fixedPointMeshVAO.use();
@@ -244,17 +260,20 @@ void Renderer::renderFixedPoints(Simulation *msSystem, Shader *clothShader, View
   for (Vec3d &c : points) {
     glBindVertexArray(fixedPointMeshVAO.VAO);
     Vec3d totalTranslate = msSystem->systemCenter + c;
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f),
-                                           glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
+    glm::mat4 translation = glm::translate(
+        glm::mat4(1.0f),
+        glm::vec3(totalTranslate[0], totalTranslate[1], totalTranslate[2]));
     clothShader->setMat4("model", translation);
 
-    glDrawArrays(GL_TRIANGLES, 0, msSystem->sphereForFixedPointRender.mesh.size() * 3);
+    glDrawArrays(GL_TRIANGLES, 0,
+                 msSystem->sphereForFixedPointRender.mesh.size() * 3);
     glBindVertexArray(0);
   }
 }
 
-void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &window,
-                           const std::vector<std::pair<Vec3d, Vec3d>> &lines ) {
+void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader,
+                           Viewer &window,
+                           const std::vector<std::pair<Vec3d, Vec3d>> &lines) {
   if (lines.empty())
     return;
 
@@ -267,7 +286,8 @@ void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &w
   int count = 0;
   for (const std::pair<Vec3d, Vec3d> &line : lines) {
     vertices.emplace_back(line.first[0], line.first[1], line.first[2]);
-    vertices.emplace_back(COLOR_WOOD[0], COLOR_WOOD[1], COLOR_WOOD[2]); // SOCK POINT
+    vertices.emplace_back(COLOR_WOOD[0], COLOR_WOOD[1],
+                          COLOR_WOOD[2]); // SOCK POINT
 
     vertices.emplace_back(line.second[0], line.second[1], line.second[2]);
     Vec3d color = posToHashColor(line.second);
@@ -280,38 +300,40 @@ void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &w
   unsigned int IBO;
   unsigned int VAO, VBO;
 
-//  VertexArrayObject vertexVAO = VertexArrayObject(vertices,
-//                                                  lines.size() * 2,
-//                                                  2 * sizeof(glm::vec3));
-//    std::vector<int> fieldComponents = {3, 3};
-//    vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
+  //  VertexArrayObject vertexVAO = VertexArrayObject(vertices,
+  //                                                  lines.size() * 2,
+  //                                                  2 * sizeof(glm::vec3));
+  //    std::vector<int> fieldComponents = {3, 3};
+  //    vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
 
   glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
+               glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), nullptr);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), (void *) (sizeof(glm::vec3)));
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3),
+                        nullptr);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3),
+                        (void *)(sizeof(glm::vec3)));
   glEnableVertexAttribArray(1);
 
   glGenBuffers(1, &IBO);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2), glm::value_ptr(indices[0]),
-               GL_STATIC_DRAW);
-
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2),
+               glm::value_ptr(indices[0]), GL_STATIC_DRAW);
 
   glBindVertexArray(0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glDepthMask(GL_FALSE);
-//    vertexVAO.use();
+  //    vertexVAO.use();
 
   glBindVertexArray(VAO);
-  glDrawElements(GL_LINES, (GLuint) indices.size() * 2, GL_UNSIGNED_INT, NULL);
+  glDrawElements(GL_LINES, (GLuint)indices.size() * 2, GL_UNSIGNED_INT, NULL);
   glBindVertexArray(0);
   glDepthMask(GL_TRUE);
 
@@ -320,9 +342,10 @@ void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &w
   glDeleteVertexArrays(1, &VAO);
 }
 
-
-void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &window,
-                           const std::vector<std::pair<Vec3d, Vec3d>> &lines, Vec3d color) {
+void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader,
+                           Viewer &window,
+                           const std::vector<std::pair<Vec3d, Vec3d>> &lines,
+                           Vec3d color) {
   if (lines.empty())
     return;
 
@@ -347,38 +370,40 @@ void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &w
   unsigned int IBO;
   unsigned int VAO, VBO;
 
-//  VertexArrayObject vertexVAO = VertexArrayObject(vertices,
-//                                                  lines.size() * 2,
-//                                                  2 * sizeof(glm::vec3));
-//    std::vector<int> fieldComponents = {3, 3};
-//    vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
+  //  VertexArrayObject vertexVAO = VertexArrayObject(vertices,
+  //                                                  lines.size() * 2,
+  //                                                  2 * sizeof(glm::vec3));
+  //    std::vector<int> fieldComponents = {3, 3};
+  //    vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
 
   glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
+               glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), nullptr);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), (void *) (sizeof(glm::vec3)));
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3),
+                        nullptr);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3),
+                        (void *)(sizeof(glm::vec3)));
   glEnableVertexAttribArray(1);
 
   glGenBuffers(1, &IBO);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2), glm::value_ptr(indices[0]),
-               GL_STATIC_DRAW);
-
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2),
+               glm::value_ptr(indices[0]), GL_STATIC_DRAW);
 
   glBindVertexArray(0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glDepthMask(GL_FALSE);
-//    vertexVAO.use();
+  //    vertexVAO.use();
 
   glBindVertexArray(VAO);
-  glDrawElements(GL_LINES, (GLuint) indices.size() * 2, GL_UNSIGNED_INT, NULL);
+  glDrawElements(GL_LINES, (GLuint)indices.size() * 2, GL_UNSIGNED_INT, NULL);
   glBindVertexArray(0);
   glDepthMask(GL_TRUE);
 
@@ -387,8 +412,8 @@ void Renderer::renderLines(Simulation *msSystem, Shader *simpleShader, Viewer &w
   glDeleteVertexArrays(1, &VAO);
 }
 
-
-void Renderer::renderGrid(Simulation *msSystem, Shader *simpleShader, Viewer &window) {
+void Renderer::renderGrid(Simulation *msSystem, Shader *simpleShader,
+                          Viewer &window) {
   useSimpleShaderAndSetUniforms(msSystem, simpleShader, window);
   simpleShader->setInt("renderMode", 0); // ground grid
 
@@ -414,7 +439,7 @@ void Renderer::renderGrid(Simulation *msSystem, Shader *simpleShader, Viewer &wi
         int row2 = (j + 1) * (slices + 1);
         // horizontal
         indices.emplace_back(row1 + i, row1 + i + 1);
-        //vertical
+        // vertical
         indices.emplace_back(row1 + i, row2 + i);
       }
     }
@@ -424,21 +449,21 @@ void Renderer::renderGrid(Simulation *msSystem, Shader *simpleShader, Viewer &wi
 
     glGenBuffers(1, &gridVBO);
     glBindBuffer(GL_ARRAY_BUFFER, gridVBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3),
+                 glm::value_ptr(vertices[0]), GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glGenBuffers(1, &gridIBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gridIBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2), glm::value_ptr(indices[0]),
-                 GL_STATIC_DRAW);
-
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(glm::uvec2),
+                 glm::value_ptr(indices[0]), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    gridLength = (GLuint) indices.size() * 2;
+    gridLength = (GLuint)indices.size() * 2;
     gridInitialized = true;
   }
 
@@ -448,12 +473,13 @@ void Renderer::renderGrid(Simulation *msSystem, Shader *simpleShader, Viewer &wi
   glBindVertexArray(0);
   glDepthMask(GL_TRUE);
 
-//      glDeleteBuffers(1, &gridVBO);
-//      glDeleteBuffers(1, &gridIBO);
-//      glDeleteVertexArrays(1, &gridVAO);
+  //      glDeleteBuffers(1, &gridVBO);
+  //      glDeleteBuffers(1, &gridIBO);
+  //      glDeleteVertexArrays(1, &gridVAO);
 }
 
-void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader, Viewer &window, std::vector<Spline> &splines,
+void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader,
+                             Viewer &window, std::vector<Spline> &splines,
                              Vec3d color) {
   useClothShaderAndSetUniforms(msSystem, clothShader, window);
   glm::vec3 lightColor;
@@ -461,10 +487,9 @@ void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader, Viewer &
   clothShader->setBool("shading", false);
   clothShader->setBool("lighting", false);
   Mat3x3d rotMax;
-  rotMax = Eigen::AngleAxis<double>(0, Vec3d::UnitX())
-           * Eigen::AngleAxis<double>(0, Vec3d::UnitY())
-           * Eigen::AngleAxis<double>(0.5 * 3.14159, Vec3d::UnitZ());
-
+  rotMax = Eigen::AngleAxis<double>(0, Vec3d::UnitX()) *
+           Eigen::AngleAxis<double>(0, Vec3d::UnitY()) *
+           Eigen::AngleAxis<double>(0.5 * 3.14159, Vec3d::UnitZ());
 
   for (Spline &s : splines) {
     std::vector<Vec3d> samplePoints;
@@ -482,7 +507,6 @@ void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader, Viewer &
     int numFields = 15;
     int TOTAL_TRIANGLES = (samplePoints.size() - 1) * 2;
     float vertexArr[TOTAL_TRIANGLES * 3 * numFields];
-
 
     for (int i = 0; i < TOTAL_TRIANGLES; i++) {
       Vec3d p0, p1, p2;
@@ -502,17 +526,17 @@ void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader, Viewer &
       for (int j = 0; j < 3; j++) {
         int startIdx = i * (numFields * 3) + j * numFields;
         fillArrayWithVec3(vertexArr, vs[j], startIdx + 0);
-        vertexArr[startIdx + 3] = (j == 1) ? 1.0 : 0.0; // (0, 0 ), (1, 0), (0, 1)
+        vertexArr[startIdx + 3] =
+            (j == 1) ? 1.0 : 0.0; // (0, 0 ), (1, 0), (0, 1)
         vertexArr[startIdx + 4] = (j >= 2) ? 1.0 : 0.0;
         vertexArr[startIdx + 8] = true; // override color
-        fillArrayWithVec3(vertexArr, color, startIdx + 9); // override with orange color
+        fillArrayWithVec3(vertexArr, color,
+                          startIdx + 9); // override with orange color
       }
     }
 
-
-    VertexArrayObject vertexVAO = VertexArrayObject((float *) vertexArr,
-                                                    TOTAL_TRIANGLES * 3,
-                                                    numFields * sizeof(float));
+    VertexArrayObject vertexVAO = VertexArrayObject(
+        (float *)vertexArr, TOTAL_TRIANGLES * 3, numFields * sizeof(float));
 
     int fieldComponents[6] = {3, 2, 3, 1, 3, 3};
     int count = 0;
@@ -521,32 +545,31 @@ void Renderer::renderSplines(Simulation *msSystem, Shader *clothShader, Viewer &
       count += fieldComponents[i];
     }
 
-//        std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3};
-//        vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
+    //        std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3};
+    //        vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
     vertexVAO.use();
 
     glDrawArrays(GL_TRIANGLES, 0, TOTAL_TRIANGLES * 3);
     glBindVertexArray(0);
-
   }
 }
 
-void Renderer::renderPrimitive(Primitive& p, Shader* shader, Vec3d center) {
+void Renderer::renderPrimitive(Primitive &p, Shader *shader, Vec3d center) {
   shader->use();
-//  std::printf("render primitive of type %d center (%2.f, %.2f, %.2f)\n", p.type, center[0], center[1], center[2]);
+  //  std::printf("render primitive of type %d center (%2.f, %.2f, %.2f)\n",
+  //  p.type, center[0], center[1], center[2]);
 
   int numFields = 15;
   int TRIANGLE_NUM = p.mesh.size();
   float vertexArr[3 * TRIANGLE_NUM * numFields];
   for (int i = 0; i < TRIANGLE_NUM; i++) {
     Triangle &m = p.mesh[i];
-    fillTriangleToVertexArr(m, vertexArr, i * (numFields * 3), numFields, m.color,
-                            center, true);
+    fillTriangleToVertexArr(m, vertexArr, i * (numFields * 3), numFields,
+                            m.color, center, true);
   }
 
-  VertexArrayObject vertexVAO = VertexArrayObject((float *) vertexArr,
-                                                  TRIANGLE_NUM * 3,
-                                                  numFields * sizeof(float));
+  VertexArrayObject vertexVAO = VertexArrayObject(
+      (float *)vertexArr, TRIANGLE_NUM * 3, numFields * sizeof(float));
   std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3};
   vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
   vertexVAO.use();
@@ -554,41 +577,47 @@ void Renderer::renderPrimitive(Primitive& p, Shader* shader, Vec3d center) {
   glBindVertexArray(0);
 }
 
-void Renderer::renderPrimitives(std::vector<Primitive*>& primitives, Shader* clothShader,  int recordIdx, Vec3d center = Vec3d(0,0,0)) {
-    for (Primitive *p : primitives) {
-      if (p->isEnabled && p->simulationEnabled) {
-        if (p->isPrimitiveCollection) {
-//          std::printf("p is collection with center (%.2f, %.2f, %.2f) accumulated (%.2f %.2f %.2f) record %d/%zu\n",
-//                      p->forwardRecords[recordIdx][0],
-//                      p->forwardRecords[recordIdx][1],
-//                      p->forwardRecords[recordIdx][2],
-//                      center[0], center[1], center[2],
-//                      recordIdx, p->forwardRecords.size()
-//                      );
-          renderPrimitives(p->primitives, clothShader, recordIdx, center + p->forwardRecords[recordIdx]);
-        } else {
-//          std::printf("p is single with center (%.2f, %.2f, %.2f) accumulated center (%.2f, %.2f, %.2f) record %d/%zu\n",
-//                      p->forwardRecords[recordIdx][0],
-//                      p->forwardRecords[recordIdx][1],
-//                      p->forwardRecords[recordIdx][2],
-//                      center[0],
-//                      center[1], center[2],
-//                      recordIdx, p->forwardRecords.size()
-//          );
-          renderPrimitive(*p, clothShader, p->forwardRecords[recordIdx] + center);
-        }
+void Renderer::renderPrimitives(std::vector<Primitive *> &primitives,
+                                Shader *clothShader, int recordIdx,
+                                Vec3d center = Vec3d(0, 0, 0)) {
+  for (Primitive *p : primitives) {
+    if (p->isEnabled && p->simulationEnabled) {
+      if (p->isPrimitiveCollection) {
+        //          std::printf("p is collection with center (%.2f, %.2f, %.2f)
+        //          accumulated (%.2f %.2f %.2f) record %d/%zu\n",
+        //                      p->forwardRecords[recordIdx][0],
+        //                      p->forwardRecords[recordIdx][1],
+        //                      p->forwardRecords[recordIdx][2],
+        //                      center[0], center[1], center[2],
+        //                      recordIdx, p->forwardRecords.size()
+        //                      );
+        renderPrimitives(p->primitives, clothShader, recordIdx,
+                         center + p->forwardRecords[recordIdx]);
+      } else {
+        //          std::printf("p is single with center (%.2f, %.2f, %.2f)
+        //          accumulated center (%.2f, %.2f, %.2f) record %d/%zu\n",
+        //                      p->forwardRecords[recordIdx][0],
+        //                      p->forwardRecords[recordIdx][1],
+        //                      p->forwardRecords[recordIdx][2],
+        //                      center[0],
+        //                      center[1], center[2],
+        //                      recordIdx, p->forwardRecords.size()
+        //          );
+        renderPrimitive(*p, clothShader, p->forwardRecords[recordIdx] + center);
       }
     }
+  }
 }
-void
-Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader *simpleShader, Viewer &viewer,
-                              std::vector<Simulation::ForwardInformation> &recordToUse, int recordIdx,
-                              bool isGroundTruthSystem) {
+void Renderer::stepAndRenderSystem(
+    Simulation *msSystem, Shader *clothShader, Shader *simpleShader,
+    Viewer &viewer, std::vector<Simulation::ForwardInformation> &recordToUse,
+    int recordIdx, bool isGroundTruthSystem) {
 
   Simulation::ForwardInformation record;
   // TODO: change to atomic
   if (recordIdx >= recordToUse.size()) {
-    std::printf("want to render step %d but only %zu records are available\n", recordIdx, recordToUse.size());
+    std::printf("want to render step %d but only %zu records are available\n",
+                recordIdx, recordToUse.size());
     return;
   } else {
     record = recordToUse[recordIdx];
@@ -599,10 +628,8 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
       renderGrid(msSystem, simpleShader, viewer);
   }
 
-
   useClothShaderAndSetUniforms(msSystem, clothShader, viewer);
-  clothShader->setVec3("spotLightPos", (Vec3d) record.x.segment(0, 3));
-
+  clothShader->setVec3("spotLightPos", (Vec3d)record.x.segment(0, 3));
 
   if (isGroundTruthSystem) {
     clothShader->use();
@@ -612,22 +639,22 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
   }
   VecXd x_now, v_now;
 
-
   x_now = record.x;
   v_now = record.v;
-
 
   bool vertexCollision[msSystem->particles.size()];
   for (int i = 0; i < msSystem->particles.size(); i++) {
     vertexCollision[i] = false;
   }
 
-  for (const Simulation::SelfCollisionInformation &info : record.collisionInfos.first.second) {
+  for (const Simulation::SelfCollisionInformation &info :
+       record.collisionInfos.first.second) {
     vertexCollision[info.particleId1] = true;
     vertexCollision[info.particleId2] = true;
   }
 
-  for (const Simulation::PrimitiveCollisionInformation &info : record.collisionInfos.first.first) {
+  for (const Simulation::PrimitiveCollisionInformation &info :
+       record.collisionInfos.first.first) {
     vertexCollision[info.particleId] = true;
   }
 
@@ -644,8 +671,10 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
       double deformation = m.getDeformation(x_now);
       curIdx++;
       Particle *vs[] = {m.p0(), m.p1(), m.p2()};
-      // {pos(3),texCorrd(2),velocity(3),override?(1),color(3),normal(3), collision(1), deformation(1)}
-      fillTriangleToVertexArr(m, vArr, curIdx * 3 * numFields, numFields, Vec3d(0, 0, 0), Vec3d(0, 0, 0), true);
+      // {pos(3),texCorrd(2),velocity(3),override?(1),color(3),normal(3),
+      // collision(1), deformation(1)}
+      fillTriangleToVertexArr(m, vArr, curIdx * 3 * numFields, numFields,
+                              Vec3d(0, 0, 0), Vec3d(0, 0, 0), true);
 
       Vec3d randColor;
       srand(triIdx);
@@ -675,10 +704,11 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
         fillArrayWithFloat(vArr, deformation, startIdx + 16);
       }
       int currentTriangleCount = curIdx + 1;
-      if ((currentTriangleCount == EMIT_SIZE) || (triIdx + 1 == msSystem->mesh.size())) {
-        VertexArrayObject vertexVAO = VertexArrayObject((float *) vArr,
-                                                        1 * 3 * currentTriangleCount,
-                                                        numFields * sizeof(float));
+      if ((currentTriangleCount == EMIT_SIZE) ||
+          (triIdx + 1 == msSystem->mesh.size())) {
+        VertexArrayObject vertexVAO =
+            VertexArrayObject((float *)vArr, 1 * 3 * currentTriangleCount,
+                              numFields * sizeof(float));
         std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3, 1, 1};
         vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
         vertexVAO.use();
@@ -687,7 +717,6 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
 
         curIdx = -1;
       }
-
     }
 
     renderPrimitives(msSystem->allPrimitivesToRender, clothShader, recordIdx);
@@ -695,59 +724,65 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
 
   // TODO: needs rewrite for robotics task
   if (viewer.splineVisualization) {
-    if (msSystem->sceneConfig.trajectory != TrajectoryConfigs::PER_STEP_TRAJECTORY)
-    renderSplines(msSystem, clothShader, viewer, record.splines, COLOR_YELLOW);
-
+    if (msSystem->sceneConfig.trajectory !=
+        TrajectoryConfigs::PER_STEP_TRAJECTORY)
+      renderSplines(msSystem, clothShader, viewer, record.splines,
+                    COLOR_YELLOW);
   }
 
   if (viewer.perStepTrajectoryVisualization) {
-    if (msSystem->sceneConfig.trajectory == TrajectoryConfigs::PER_STEP_TRAJECTORY) {
+    if (msSystem->sceneConfig.trajectory ==
+        TrajectoryConfigs::PER_STEP_TRAJECTORY) {
       std::vector<std::pair<Vec3d, Vec3d>> lines;
-      for (int i = 0; i < msSystem->sysMat[msSystem->currentSysmatId].fixedPoints.size(); i++) {
+      for (int i = 0;
+           i < msSystem->sysMat[msSystem->currentSysmatId].fixedPoints.size();
+           i++) {
         lines.clear();
-        for (int pIdx = 0; pIdx <  ((int)  msSystem->perstepTrajectory.size())-1; pIdx++) {
-          lines.emplace_back(msSystem->perstepTrajectory[pIdx].segment(i * 3, 3), msSystem->perstepTrajectory[pIdx+1].segment(i * 3, 3));
+        for (int pIdx = 0; pIdx < ((int)msSystem->perstepTrajectory.size()) - 1;
+             pIdx++) {
+          lines.emplace_back(
+              msSystem->perstepTrajectory[pIdx].segment(i * 3, 3),
+              msSystem->perstepTrajectory[pIdx + 1].segment(i * 3, 3));
         }
         if (!lines.empty())
           renderLines(msSystem, simpleShader, viewer, lines, Vec3d(1, 1, 0));
-
       }
     }
-
   }
 
   if (viewer.perStepGradientVisualization) {
 
-
     std::vector<std::pair<Vec3d, Vec3d>> pointsAndDirs;
 
-       for (int i = 0; i < msSystem->sysMat[msSystem->currentSysmatId].fixedPoints.size(); i++) {
-         for (int pIdx = 0; pIdx <  ((int)  recordToUse.size())-1; pIdx++) {
-            Vec3d loc = recordToUse[pIdx].x_fixedpoints.segment(i * 3, 3);
-           bool skip = false;
-           if (!pointsAndDirs.empty()) {
-             Vec3d locLast = pointsAndDirs[pointsAndDirs.size()-1].first;
-             skip = (locLast-loc).norm() < 0.1;
-
-           }
-           if ((!skip) && (msSystem->perStepGradient.size() > pIdx)) {
-             pointsAndDirs.emplace_back(loc, -msSystem->perStepGradient[pIdx].segment(i * 3, 3)); /* render rnegative gradient -> descent direction */
-
-           }
-         }
+    for (int i = 0;
+         i < msSystem->sysMat[msSystem->currentSysmatId].fixedPoints.size();
+         i++) {
+      for (int pIdx = 0; pIdx < ((int)recordToUse.size()) - 1; pIdx++) {
+        Vec3d loc = recordToUse[pIdx].x_fixedpoints.segment(i * 3, 3);
+        bool skip = false;
+        if (!pointsAndDirs.empty()) {
+          Vec3d locLast = pointsAndDirs[pointsAndDirs.size() - 1].first;
+          skip = (locLast - loc).norm() < 0.1;
+        }
+        if ((!skip) && (msSystem->perStepGradient.size() > pIdx)) {
+          pointsAndDirs.emplace_back(
+              loc, -msSystem->perStepGradient[pIdx].segment(
+                       i * 3,
+                       3)); /* render rnegative gradient -> descent direction */
+        }
       }
+    }
 
-        if (!pointsAndDirs.empty())
-        renderNormals(msSystem, clothShader, viewer, msSystem->arrow3, pointsAndDirs, Vec3d(1, 0, 0));
-
-
+    if (!pointsAndDirs.empty())
+      renderNormals(msSystem, clothShader, viewer, msSystem->arrow3,
+                    pointsAndDirs, Vec3d(1, 0, 0));
   }
 
   std::vector<Vec3d> fixedPoints;
   for (FixedPoint &p : msSystem->sysMat[record.sysMatId].fixedPoints)
     fixedPoints.emplace_back(record.x_fixedpoints.segment(p.idx * 3, 3));
-  renderFixedPoints(msSystem, clothShader, viewer, fixedPoints, COLOR_EGGPLANT, true);
-
+  renderFixedPoints(msSystem, clothShader, viewer, fixedPoints, COLOR_EGGPLANT,
+                    true);
 
   if ((viewer.particleId * 3 < record.x.rows()) && (viewer.particleId >= 0)) {
     Vec3d highlightParticlePos = record.x.segment(viewer.particleId * 3, 3);
@@ -756,43 +791,47 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
   }
 
   if (viewer.visualizeCollision) {
-  {
-    std::vector<Vec3d> points;
-    std::vector<std::pair<Vec3d, Vec3d>> pointsAndDirs;
-      for (const Simulation::PrimitiveCollisionInformation &info : record.collisionInfos.first.first) {
-        pointsAndDirs.emplace_back(record.x.segment(info.particleId * 3, 3), info.normal);
+    {
+      std::vector<Vec3d> points;
+      std::vector<std::pair<Vec3d, Vec3d>> pointsAndDirs;
+      for (const Simulation::PrimitiveCollisionInformation &info :
+           record.collisionInfos.first.first) {
+        pointsAndDirs.emplace_back(record.x.segment(info.particleId * 3, 3),
+                                   info.normal);
         points.emplace_back(record.x.segment(info.particleId * 3, 3));
       }
 
-
-    if (viewer.collisionShowNormal)
-      renderNormals(msSystem, clothShader, viewer, msSystem->arrow2, pointsAndDirs, Vec3d(1, 0, 0));
-      renderFixedPoints(msSystem, clothShader, viewer, points, COLOR_IBM_ULTRAMARINE40, false, false);
-
+      if (viewer.collisionShowNormal)
+        renderNormals(msSystem, clothShader, viewer, msSystem->arrow2,
+                      pointsAndDirs, Vec3d(1, 0, 0));
+      renderFixedPoints(msSystem, clothShader, viewer, points,
+                        COLOR_IBM_ULTRAMARINE40, false, false);
     }
   }
-
 
   if (viewer.visualizeSelfCollisionLayers) {
     std::vector<std::pair<Vec3d, Vec3d>> pointsAndDirs;
     std::vector<Vec3d> points;
     std::vector<std::pair<Vec3d, Vec3d>> lines;
-    for (const Simulation::SelfCollisionInformation &info : record.collisionInfos.first.second) {
-      if ((viewer.selfCollisionLayerVisId != -1) && (info.layerId != viewer.selfCollisionLayerVisId))
+    for (const Simulation::SelfCollisionInformation &info :
+         record.collisionInfos.first.second) {
+      if ((viewer.selfCollisionLayerVisId != -1) &&
+          (info.layerId != viewer.selfCollisionLayerVisId))
         continue;
       Vec3d p1 = record.x.segment(info.particleId1 * 3, 3);
       Vec3d p2 = record.x.segment(info.particleId2 * 3, 3);
-      lines.emplace_back(p1,p2);
+      lines.emplace_back(p1, p2);
       pointsAndDirs.emplace_back(p1, info.normal);
       pointsAndDirs.emplace_back(p2, -info.normal);
       points.emplace_back(p1);
       points.emplace_back(p2);
     }
-    renderFixedPoints(msSystem, clothShader, viewer, points, COLOR_IBM_MAGENTA50, false, false);
+    renderFixedPoints(msSystem, clothShader, viewer, points,
+                      COLOR_IBM_MAGENTA50, false, false);
     if (viewer.collisionShowNormal)
-      renderNormals(msSystem, clothShader, viewer, msSystem->arrow2, pointsAndDirs, Vec3d(1, 0, 0));
+      renderNormals(msSystem, clothShader, viewer, msSystem->arrow2,
+                    pointsAndDirs, Vec3d(1, 0, 0));
     renderLines(msSystem, simpleShader, viewer, lines, COLOR_IBM_MAGENTA50);
-
   }
 
   {
@@ -810,19 +849,20 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
 
     for (int i = 0; i < 4; i++) {
       lines.emplace_back(lines[i]); // back face
-      lines[lines.size() - 1].first[2] = lines[lines.size() - 1].second[2] = max[2];
+      lines[lines.size() - 1].first[2] = lines[lines.size() - 1].second[2] =
+          max[2];
     }
 
-    for (int i = 0; i < 2; i++) { //lines connecting front and back face
+    for (int i = 0; i < 2; i++) { // lines connecting front and back face
       Vec3d leftP = lines[i].first;
       Vec3d rightP = lines[i].second;
       lines.emplace_back(leftP, leftP);
       lines.emplace_back(rightP, rightP);
-      lines[lines.size() - 1].second[2] = lines[lines.size() - 2].second[2] = max[2];
+      lines[lines.size() - 1].second[2] = lines[lines.size() - 2].second[2] =
+          max[2];
     }
 
     renderLines(msSystem, simpleShader, viewer, lines, Vec3d(1, 0, 0));
-
   }
   if (!isGroundTruthSystem) {
     if (viewer.renderAxis) {
@@ -830,11 +870,11 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
       for (int i = 0; i < 3; i++) {
         std::vector<Vec3d> points;
         for (int dist = 0; dist < 15; dist++) {
-          points.emplace_back(Vec3d((i == 0) * dist, (i == 1) * dist, (i == 2) * dist));
+          points.emplace_back(
+              Vec3d((i == 0) * dist, (i == 1) * dist, (i == 2) * dist));
         }
         Vec3d color(i == 0, i == 1, i == 2);
         renderFixedPoints(msSystem, clothShader, viewer, points, color);
-
       }
     }
 
@@ -853,25 +893,27 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
 
       for (int i = 0; i < 4; i++) {
         lines.emplace_back(lines[i]); // back face
-        lines[lines.size() - 1].first[2] = lines[lines.size() - 1].second[2] = max[2];
+        lines[lines.size() - 1].first[2] = lines[lines.size() - 1].second[2] =
+            max[2];
       }
 
-      for (int i = 0; i < 2; i++) { //lines connecting front and back face
+      for (int i = 0; i < 2; i++) { // lines connecting front and back face
         Vec3d leftP = lines[i].first;
         Vec3d rightP = lines[i].second;
         lines.emplace_back(leftP, leftP);
         lines.emplace_back(rightP, rightP);
-        lines[lines.size() - 1].second[2] = lines[lines.size() - 2].second[2] = max[2];
+        lines[lines.size() - 1].second[2] = lines[lines.size() - 2].second[2] =
+            max[2];
       }
 
       renderLines(msSystem, simpleShader, viewer, lines, Vec3d(1, 0, 0));
-
     }
 
     Vec3d greenColor(0, 1, 0);
     if (viewer.renderPosPairs) {
       if (!msSystem->debugPointTargetPos.empty()) {
-        std::vector<Simulation::CorresPondenceTargetInfo> &pairs = msSystem->debugPointTargetPos;
+        std::vector<Simulation::CorresPondenceTargetInfo> &pairs =
+            msSystem->debugPointTargetPos;
         std::vector<std::pair<Vec3d, Vec3d>> lines;
         std::vector<Vec3d> posesSock, posesFoot;
 
@@ -881,7 +923,8 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
             continue;
           posesFoot.emplace_back(pair.targetPos);
           std::vector single = {pair.targetPos};
-          renderFixedPoints(msSystem, clothShader, viewer, single, posToHashColor(pair.targetPos), false);
+          renderFixedPoints(msSystem, clothShader, viewer, single,
+                            posToHashColor(pair.targetPos), false);
 
           for (int id : pair.particleIndices) {
             Vec3d sockPoint = record.x.segment(id * 3, 3);
@@ -890,7 +933,8 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
           }
         }
 
-        renderFixedPoints(msSystem, clothShader, viewer, posesSock, COLOR_WOOD, false);
+        renderFixedPoints(msSystem, clothShader, viewer, posesSock, COLOR_WOOD,
+                          false);
         renderLines(msSystem, simpleShader, viewer, lines);
       }
 
@@ -899,25 +943,23 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
         for (int pIdx : msSystem->debugLoopPoints) {
           points.emplace_back(record.x.segment(pIdx * 3, 3));
         }
-        renderFixedPoints(msSystem, clothShader, viewer, points, COLOR_IBM_MAGENTA50, false, false);
-
+        renderFixedPoints(msSystem, clothShader, viewer, points,
+                          COLOR_IBM_MAGENTA50, false, false);
       }
 
       if (!msSystem->debugShapeTargetPos.empty()) {
         useClothShaderAndSetUniforms(msSystem, clothShader, viewer);
         clothShader->use();
-         clothShader->setVec3("systemCenter",
-                             glm::vec3(0,0,0));
+        clothShader->setVec3("systemCenter", glm::vec3(0, 0, 0));
         for (std::pair<int, VecXd> target : msSystem->debugShapeTargetPos) {
           if (target.first != recordIdx)
             continue;
-           int numFields = 17;
+          int numFields = 17;
 
-            clothShader->setInt("renderMode", Viewer::RenderMode::WIREFRAME);
+          clothShader->setInt("renderMode", Viewer::RenderMode::WIREFRAME);
 
-            nanogui::Color color(0.0, 0.0, 1.0, 1.0f);
-            clothShader->setVec3("colorWireframe", color);
-
+          nanogui::Color color(0.0, 0.0, 1.0, 1.0f);
+          clothShader->setVec3("colorWireframe", color);
 
           int EMIT_SIZE = 200; // Number of Triangles in a single draw emit
           float vArr[3 * numFields * EMIT_SIZE];
@@ -928,7 +970,8 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
             double deformation = m.getDeformation(x_now);
             curIdx++;
             Particle *vs[] = {m.p0(), m.p1(), m.p2()};
-            fillTriangleToVertexArr(m, vArr, curIdx * 3 * numFields, numFields, Vec3d(0, 0, 0), Vec3d(0, 0, 0), true);
+            fillTriangleToVertexArr(m, vArr, curIdx * 3 * numFields, numFields,
+                                    Vec3d(0, 0, 0), Vec3d(0, 0, 0), true);
             for (int vIdx = 0; vIdx < 3; vIdx++) {
               Vec3d pos = target.second.segment(vs[vIdx]->idx * 3, 3);
               Vec3d vel = v_now.segment(vs[vIdx]->idx * 3, 3);
@@ -941,35 +984,28 @@ Renderer::stepAndRenderSystem(Simulation *msSystem, Shader *clothShader, Shader 
               } else {
                 fillArrayWithFloat(vArr, m.overrideColor, startIdx + 8);
               }
-              fillArrayWithFloat(vArr, vertexCollision[vs[vIdx]->idx], startIdx + 15);
+              fillArrayWithFloat(vArr, vertexCollision[vs[vIdx]->idx],
+                                 startIdx + 15);
               fillArrayWithFloat(vArr, deformation, startIdx + 16);
             }
             int currentTriangleCount = curIdx + 1;
-            if (((currentTriangleCount == EMIT_SIZE) || (triIdx + 1 == msSystem->mesh.size()))) {
-              VertexArrayObject vertexVAO = VertexArrayObject((float *) vArr,
-                                                              1 * 3 * currentTriangleCount,
-                                                              numFields * sizeof(float));
+            if (((currentTriangleCount == EMIT_SIZE) ||
+                 (triIdx + 1 == msSystem->mesh.size()))) {
+              VertexArrayObject vertexVAO =
+                  VertexArrayObject((float *)vArr, 1 * 3 * currentTriangleCount,
+                                    numFields * sizeof(float));
               std::vector<int> fieldComponents = {3, 2, 3, 1, 3, 3, 1, 1};
               vertexArrAddAtrribInfo(vertexVAO, fieldComponents);
               vertexVAO.use();
 
-
               glDrawArrays(GL_TRIANGLES, 0, currentTriangleCount * 3);
               glBindVertexArray(0);
 
-
               curIdx = -1;
             }
-
           }
-
-
         }
       }
-
     }
-
-   }
-
-
+  }
 }

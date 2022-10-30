@@ -17,3 +17,5 @@ diffcloth_py.egg-info/
 dist/
 .vscode/
 __pycache__/
+.cache/
+output/

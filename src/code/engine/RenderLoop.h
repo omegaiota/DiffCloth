@@ -5,35 +5,31 @@
 #ifndef OMEGAENGINE_RENDERLOOP_H
 #define OMEGAENGINE_RENDERLOOP_H
 
-#include "Renderer.h"
-#include "Macros.h"
-#include "Viewer.h"
-#include "Shader.h"
 #include "../simulation/Simulation.h"
+#include "Macros.h"
+#include "Renderer.h"
+#include "Shader.h"
+#include "Viewer.h"
 
 class RenderLoop {
 public:
-    static Shader* clothShader;
-    static Shader* simpleShader;
-    static bool initialized;
+  static Shader *clothShader;
+  static Shader *simpleShader;
+  static bool initialized;
 
+  static Viewer viewer;
+  static GLFWwindow *glfwWindow;
 
-    static Viewer viewer;
-    static GLFWwindow *glfwWindow;
+  static void renderRecordsForSystem(
+      Simulation *system,
+      std::vector<Simulation::ForwardInformation> &forwardRecords,
+      bool renderPosPairs = false, bool exitOnLastFrame = false,
+      std::string text = "You can set text for your convenience");
 
-    static void
-    renderRecordsForSystem(Simulation *system, std::vector<Simulation::ForwardInformation> &forwardRecords,
-                           bool renderPosPairs = false, bool exitOnLastFrame = false,
-                           std::string text = "You can set text for your convenience");
-
-    ~RenderLoop() {
-      delete clothShader;
-      delete simpleShader;
-    }
-
+  ~RenderLoop() {
+    delete clothShader;
+    delete simpleShader;
+  }
 };
 
-
-
-
-#endif //OMEGAENGINE_RENDERLOOP_H
+#endif // OMEGAENGINE_RENDERLOOP_H

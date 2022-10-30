@@ -1,44 +1,42 @@
 
-#include "engine/Viewer.h"
-#include <queue>
-#include <mutex>
-#include "engine/Renderer.h"
-#include "optimization/BackwardTaskSolver.h"
 #include "engine/Macros.h"
+#include "engine/Renderer.h"
 #include "engine/Shader.h"
-#include "simulation/Simulation.h"
+#include "engine/UtilityFunctions.h"
+#include "engine/Viewer.h"
+#include "optimization/BackwardTaskSolver.h"
 #include "optimization/OptimizationTaskConfigurations.h"
 #include "simulation/PySimulations.h"
-#include "engine/UtilityFunctions.h"
+#include "simulation/Simulation.h"
 #include "supports/Logging.h"
+#include <mutex>
+#include <queue>
 using namespace glm;
 Viewer window;
 
-
-
-
 void runBackwardTask(int demoIdx, bool isRandom, int srandSeed) {
-  Simulation::SceneConfiguration initSceneProfile = OptimizationTaskConfigurations::hatScene;
-  Simulation *clothSystem = Simulation::createSystem(
-                                                     initSceneProfile,
-                                                     Vec3d(0, 0, 0), true);
+  Simulation::SceneConfiguration initSceneProfile =
+      OptimizationTaskConfigurations::hatScene;
+  Simulation *clothSystem =
+      Simulation::createSystem(initSceneProfile, Vec3d(0, 0, 0), true);
 
-  BackwardTaskSolver::solveDemo(clothSystem, [&](const std::string &v) {}, demoIdx, isRandom,
-                                srandSeed);
-
+  BackwardTaskSolver::solveDemo(
+      clothSystem, [&](const std::string &v) {}, demoIdx, isRandom, srandSeed);
 
   delete clothSystem;
 }
 
-void renderFromFolder(int demoIdx,  std::string subFolder) {
-  Simulation::TaskConfiguration taskConfig = OptimizationTaskConfigurations::demoNumToConfigMap[demoIdx];
-  Simulation *clothSystem = Simulation::createSystem(
-                                                     taskConfig.scene,
-                                                     Vec3d(0, 0, 0), true);
+void renderFromFolder(int demoIdx, std::string subFolder) {
+  Simulation::TaskConfiguration taskConfig =
+      OptimizationTaskConfigurations::demoNumToConfigMap[demoIdx];
+  Simulation *clothSystem =
+      Simulation::createSystem(taskConfig.scene, Vec3d(0, 0, 0), true);
   clothSystem->resetForwardRecordsFromFolder(subFolder);
 
-  RenderLoop::renderRecordsForSystem(clothSystem, clothSystem->forwardRecords, false, true,
-                                     "Set text here for whatever you need (only single line is supported): Visualization for pySimulations::runExample");
+  RenderLoop::renderRecordsForSystem(
+      clothSystem, clothSystem->forwardRecords, false, true,
+      "Set text here for whatever you need (only single line is supported): "
+      "Visualization for pySimulations::runExample");
 
   delete clothSystem;
 }
@@ -51,9 +49,8 @@ char *getCmdOption(char **begin, char **end, const std::string &option) {
   return 0;
 }
 
-
-
-void checkCmdOptionExistsAndValid(std::string option, char*input,  std::vector<std::string> options) {
+void checkCmdOptionExistsAndValid(std::string option, char *input,
+                                  std::vector<std::string> options) {
   if (!input) {
     Logging::logFatal("Please specify " + std::string(option) + "\n");
     exit(0);
@@ -81,11 +78,13 @@ int main(int argc, char *argv[]) {
   int n_threads = 1;
   std::string NUM_THREADS_ENV_VAR = getEnvVar("OMP_NUM_THREADS");
   if (NUM_THREADS_ENV_VAR.empty()) {
-    Logging::logWarning("You must specify OMP_NUM_THREADS in your environment variable");
+    Logging::logWarning(
+        "You must specify OMP_NUM_THREADS in your environment variable");
     return 0;
   } else {
-    n_threads =  std::stoi(NUM_THREADS_ENV_VAR);
-    Logging::logColor("OMP_NUM_THREADS=" + int2str(n_threads) + "\n", Logging::GREEN);
+    n_threads = std::stoi(NUM_THREADS_ENV_VAR);
+    Logging::logColor("OMP_NUM_THREADS=" + int2str(n_threads) + "\n",
+                      Logging::GREEN);
   }
   bool parallelizeEigen = true;
   if (OPENMP_ENABLED) {
@@ -95,7 +94,6 @@ int main(int argc, char *argv[]) {
       Eigen::setNbThreads(n_threads);
     } else {
       Eigen::setNbThreads(1);
-
     }
     int n = Eigen::nbThreads();
     std::printf("Eigen threads: %d\n", n);
@@ -106,14 +104,14 @@ int main(int argc, char *argv[]) {
     }
   }
 
-
   enum Modes {
-      BACKWARD_TASK,  /* 1 */
-      BACKWARD_TASK_DEMO, /* 2 */
+    BACKWARD_TASK,      /* 1 */
+    BACKWARD_TASK_DEMO, /* 2 */
   };
 
   std::vector<std::string> validModes = {"optimize", "visualize"};
-  std::vector<std::string> validDemos = {"tshirt", "sock", "hat", "sphere", "dress"};
+  std::vector<std::string> validDemos = {"tshirt", "sock", "hat", "sphere",
+                                         "dress"};
   char *modeStr = getCmdOption(argv, argv + argc, "-mode");
   char *demoNameStr = getCmdOption(argv, argv + argc, "-demo");
   char *randSeedStr = getCmdOption(argv, argv + argc, "-seed");
@@ -123,7 +121,8 @@ int main(int argc, char *argv[]) {
 
   if (argc == 1) {
     Logging::logFatal(
-            "WARNING: No command line argument.\n Please specify -mode [optimize, visualize] -demo [tshirt, sock, hat] -seed [number]\n");
+        "WARNING: No command line argument.\n Please specify -mode [optimize, "
+        "visualize] -demo [tshirt, sock, hat] -seed [number]\n");
     Logging::logFatal("Exiting program...\n");
   } else {
     std::string mode = std::string(modeStr);
@@ -140,7 +139,7 @@ int main(int argc, char *argv[]) {
     } else if (demoName == "dress") {
       demo = Demos::DEMO_DRESS_TWIRL;
     }
-     if (mode == "visualize") {
+    if (mode == "visualize") {
       checkCmdOptionExistsAndValid("-exp", expStr, {});
       std::string expSubFolder = std::string(expStr);
       renderFromFolder(demo, expSubFolder);
@@ -150,7 +149,6 @@ int main(int argc, char *argv[]) {
     }
     std::printf("Exiting program...\n");
   }
-
 
   return 0;
 }

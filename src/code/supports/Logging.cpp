@@ -5,7 +5,6 @@
 
 #include "Logging.h"
 
-
 std::string Logging::RED_START = "\u001b[31m";
 std::string Logging::BLACK_START = "\u001b[30m";
 std::string Logging::WHITE_START = "\u001b[37m";
