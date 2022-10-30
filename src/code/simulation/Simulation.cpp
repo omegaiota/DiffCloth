@@ -3838,14 +3838,14 @@ Simulation::finiteDifferenceBackward(
 }
 
 void Simulation::exportCurrentSimulation(std::string shortFileName) {
-  std::printf("begin to save simulation [exportCurrentSimulation]..");
+  std::printf("[Simulation::exportCurrentSimulation\n]");
   std::fflush(stdout);
   std::string parentFolder = OUTPUT_PARENT_FOLDER + shortFileName + "/";
   checkFolderExistsAndCreate(parentFolder); 
   std::string areaTotalStr = "";
   for (int i = 0; i < forwardRecords.size(); i++) {
     double areaTotal = 0.0;
-    std::string subFolder = shortFileName + "/" + std::to_string(i) + "/";
+    std::string subFolder = parentFolder + "/" + std::to_string(i) + "/";
     checkFolderExistsAndCreate(subFolder);
     MeshFileHandler::saveOBJFile(subFolder + "0-CLOTH", forwardRecords[i].x,
                                  getParticleNormals(mesh, forwardRecords[i].x),
@@ -3890,6 +3890,7 @@ void Simulation::exportCurrentSimulation(std::string shortFileName) {
 }
 
 void Simulation::exportCurrentMeshPos(int frameIdx, std::string fileName) {
+  std::printf("[Simulation::exportCurrentMeshPos]\n");
   MeshFileHandler::exportMeshPos(forwardRecords[frameIdx].x, fileName);
 
   VecXd normals(particles.size() * 3);
@@ -3905,7 +3906,7 @@ std::vector<Simulation::BackwardInformation> Simulation::runBackwardTask(
     Simulation::ParamInfo guess, bool lossOnly,
     const std::function<void(const std::string &)> &setTextBoxCB,
     bool skipForward) {
-  std::printf("[runBackwardTask]...");
+  std::printf("[Simulation::runBackwardTask]\n");
   setTextBoxCB("backward:resetSystem\n");
   if (!skipForward)
     resetSystemWithParams(taskConfiguration, guess);
@@ -4024,7 +4025,7 @@ void Simulation::exportOptimizationRecords(Demos demoIdx,
   std::string experimentName =
       useGiven ? experimentNameGiven
                : (sceneConfig.name + "-" + currentTimestampToStr());
-  std::printf("[exportOptimizationRecords] begin to save simulation...");
+  std::printf("[Simulation::exportOptimizationRecords]\n");
   std::fflush(stdout);
   std::string parentFolder = OUTPUT_PARENT_FOLDER + experimentName + "/";
   checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
@@ -4079,8 +4080,7 @@ void Simulation::exportStatistics(Demos demoIdx,
                         statistics.experimentName + "\n");
   }
 
-  std::string subFolder =
-      std::string(taskInfo.optimizer == Optimizer::LBFGS ? "-LBFGS" : "-GD") +
+  std::string subFolder = std::string(taskInfo.optimizer == Optimizer::LBFGS ? "-LBFGS" : "-GD") +
       "/";
   std::string parentFolder =
       OUTPUT_PARENT_FOLDER + statistics.experimentName + subFolder;
@@ -4288,6 +4288,7 @@ void Simulation::exportStatsSimulations(
 void Simulation::exportSimulation(std::string fileName,
                                   std::vector<ForwardInformation> &records,
                                   bool staticPrimitivesFirstFrameOnly) {
+  std::printf("[Simulation::exportSimulation]\n");
   std::string parentFolder = OUTPUT_PARENT_FOLDER + fileName + "/";
 
   checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
