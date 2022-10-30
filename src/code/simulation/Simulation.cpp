@@ -4158,8 +4158,7 @@ void Simulation::exportStatistics(Demos demoIdx,
   statistics.optimizationRecordsSaved = currentRecordSize;
 
   // Last frame meshes
-  std::string lastFrameMeshFolder =
-      statistics.experimentName + subFolder + "last_frame_meshes/";
+  std::string lastFrameMeshFolder = OUTPUT_PARENT_FOLDER + statistics.experimentName + subFolder + "last_frame_meshes/";
   checkFolderExistsAndCreate(lastFrameMeshFolder);
   exportStatsSimulations(statistics.completeForwardLog, lastFrameMeshFolder,
                          prevForwardWritten, currentForwardInfoSize);
@@ -4223,7 +4222,7 @@ void Simulation::exportConfig(int demoIdx,
                               Simulation::SceneConfiguration &config,
                               std::string fileName) {
   std::ofstream myfile;
-  std::printf("writing config to file...%s.txt\n", fileName.c_str());
+  std::printf("writing config to file... %s \n", fileName.c_str());
   myfile.open(fileName);
   myfile << "demoName:" << config.name << " "
          << "\n";

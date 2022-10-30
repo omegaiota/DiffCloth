@@ -135,7 +135,7 @@ public:
   static void saveOBJFile(std::string filename, VecXd x_n,
                           std::vector<Vec3i> &triangles) {
     checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
-    std::ofstream os(OUTPUT_PARENT_FOLDER + filename + ".obj");
+    std::ofstream os(filename + ".obj");
 
     if (!os) {
       std::cerr << "file not exist" << std::endl;
@@ -162,7 +162,7 @@ public:
   static void saveOBJFile(std::string filename, std::vector<Vec3d> x_n,
                           std::vector<Vec3i> &triangles) {
     checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
-    std::ofstream os(OUTPUT_PARENT_FOLDER + filename + ".obj");
+    std::ofstream os(filename + ".obj");
 
     if (!os) {
       std::cerr << "file not exist" << std::endl;
@@ -189,7 +189,7 @@ public:
   static void saveOBJFile(std::string filename, VecXd x_n,
                           std::vector<Triangle> &triangles) {
     checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
-    std::ofstream os(OUTPUT_PARENT_FOLDER + filename + ".obj");
+    std::ofstream os(filename + ".obj");
 
     if (!os) {
       std::cerr << "file not exist" << std::endl;
@@ -216,10 +216,10 @@ public:
   static void saveOBJFile(std::string filename, VecXd x_n, VecXd normals,
                           std::vector<Triangle> &triangles) {
     checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
-    std::ofstream os(OUTPUT_PARENT_FOLDER + filename + ".obj");
+    std::ofstream os(filename + ".obj");
 
     if (!os) {
-      std::cerr << "file not exist:" << OUTPUT_PARENT_FOLDER + filename + ".obj"
+      std::cerr << "file not exist:" << filename + ".obj"
                 << std::endl;
       return;
     }
