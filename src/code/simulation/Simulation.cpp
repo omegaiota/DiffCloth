@@ -3837,26 +3837,19 @@ Simulation::finiteDifferenceBackward(
   return ret;
 }
 
-void Simulation::exportCurrentSimulation(std::string fileName) {
+void Simulation::exportCurrentSimulation(std::string shortFileName) {
   std::printf("begin to save simulation [exportCurrentSimulation]..");
   std::fflush(stdout);
-  std::string parentFolder =
-      std::string(SOURCE_PATH) + "/output/" + fileName + "/";
-  checkFolderExistsAndCreate(std::string(SOURCE_PATH) + "/output/");
-  checkFolderExistsAndCreate(parentFolder);
-
+  std::string parentFolder = OUTPUT_PARENT_FOLDER + shortFileName + "/";
+  checkFolderExistsAndCreate(parentFolder); 
   std::string areaTotalStr = "";
-
   for (int i = 0; i < forwardRecords.size(); i++) {
     double areaTotal = 0.0;
-    std::string subFolder = fileName + "/" + std::to_string(i) + "/";
-    std::string fullFolder = OUTPUT_PARENT_FOLDER + subFolder;
-    checkFolderExistsAndCreate(fullFolder);
-
+    std::string subFolder = shortFileName + "/" + std::to_string(i) + "/";
+    checkFolderExistsAndCreate(subFolder);
     MeshFileHandler::saveOBJFile(subFolder + "0-CLOTH", forwardRecords[i].x,
                                  getParticleNormals(mesh, forwardRecords[i].x),
                                  mesh);
-
     for (Triangle &t : mesh) {
       areaTotal += t.getArea(forwardRecords[i].x);
     }
@@ -3889,7 +3882,7 @@ void Simulation::exportCurrentSimulation(std::string fileName) {
               "-" + "CLIP",
           primPos, primMesh);
     }
-    exportFrameInfo(this, forwardRecords[i], fullFolder + "info.txt");
+    exportFrameInfo(this, forwardRecords[i], subFolder + "info.txt");
   }
 
   writeStringToFile(OUTPUT_PARENT_FOLDER + "area.txt", areaTotalStr);
@@ -4146,12 +4139,11 @@ void Simulation::exportStatistics(Demos demoIdx,
   int prevRecordsSaved = statistics.optimizationRecordsSaved;
   for (int i = statistics.optimizationRecordsSaved; i < currentRecordSize;
        i++) {
-    std::string iterationFolder =
-        statistics.experimentName + subFolder + "/iter" + std::to_string(i);
+    std::string iterationFolder = OUTPUT_PARENT_FOLDER + statistics.experimentName + subFolder + "/iter" + std::to_string(i);
     checkFolderExistsAndCreate(iterationFolder + "/");
     exportSimulation(iterationFolder, backwardOptimizationRecords[i].first);
     writeStringToFile(
-        OUTPUT_PARENT_FOLDER + iterationFolder + "/param.txt",
+        iterationFolder + "/param.txt",
         parameterToString(taskInfo, backwardOptimizationGuesses[i].first));
   }
 
@@ -4336,7 +4328,7 @@ void Simulation::exportSimulation(std::string fileName,
             primPos, primMesh);
       }
 
-    exportFrameInfo(this, records[i], fullFolder + "info.txt");
+    exportFrameInfo(this, records[i], fileName + "info.txt");
   }
 }
 
