@@ -2135,11 +2135,11 @@ void Viewer::addForwardSimulationControlWidets() {
   SettingsControl->addWidget("fileName", fileNameTextBox);
 
   SettingsControl->addButton("Save Mesh Position", [&]() {
-    simSystems[0]->exportCurrentMeshPos(playBackId, fileNameTextBox->value());
+    simSystems[0]->exportCurrentMeshPos(playBackId, OUTPUT_PARENT_FOLDER + fileNameTextBox->value());
   });
 
   SettingsControl->addButton("Output Animation", [&]() {
-    simSystems[0]->exportCurrentSimulation(fileNameTextBox->value());
+    simSystems[0]->exportCurrentSimulation(OUTPUT_PARENT_FOLDER + fileNameTextBox->value() + "/");
   });
 
   //  SettingsControl->addButton("Load Animation", [&]() {

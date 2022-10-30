@@ -3837,17 +3837,15 @@ Simulation::finiteDifferenceBackward(
   return ret;
 }
 
-void Simulation::exportCurrentSimulation(std::string shortFileName) {
-  std::printf("[Simulation::exportCurrentSimulation\n]");
+void Simulation::exportCurrentSimulation(std::string fullFileName) {
+  std::printf("[Simulation::exportCurrentSimulation] %s\n", fullFileName.c_str());
   std::fflush(stdout);
-  std::string parentFolder = OUTPUT_PARENT_FOLDER + shortFileName + "/";
-  checkFolderExistsAndCreate(parentFolder); 
+  checkFolderExistsAndCreate(fullFileName); 
   std::string areaTotalStr = "";
   for (int i = 0; i < forwardRecords.size(); i++) {
     double areaTotal = 0.0;
-    std::string subFolder = parentFolder + "/" + std::to_string(i) + "/";
-    checkFolderExistsAndCreate(subFolder);
-    MeshFileHandler::saveOBJFile(subFolder + "0-CLOTH", forwardRecords[i].x,
+    std::string subFolderPrefix = fullFileName + "/" + std::to_string(i);
+    MeshFileHandler::saveOBJFile(subFolderPrefix + "/" + "0-CLOTH", forwardRecords[i].x,
                                  getParticleNormals(mesh, forwardRecords[i].x),
                                  mesh);
     for (Triangle &t : mesh) {
@@ -3865,7 +3863,7 @@ void Simulation::exportCurrentSimulation(std::string shortFileName) {
       std::string name = Primitive::primitiveTypeStrings[prim->type];
       prim->getMesh(primMesh, primPos, Vec3d(0, 0, 0), i);
       MeshFileHandler::saveOBJFile(
-          subFolder + std::to_string(primId + 1) + "-" + name, primPos,
+          subFolderPrefix + "/" + std::to_string(primId + 1) + "-" + name, primPos,
           getParticleNormals(primMesh, primPos), primMesh);
     }
 
@@ -3878,24 +3876,24 @@ void Simulation::exportCurrentSimulation(std::string shortFileName) {
       VecXd primPos;
       clip.getMesh(primMesh, primPos, clipCenter);
       MeshFileHandler::saveOBJFile(
-          subFolder + std::to_string(primitives.size() + fixedPointId + 1) +
+          subFolderPrefix + "/" + std::to_string(primitives.size() + fixedPointId + 1) +
               "-" + "CLIP",
           primPos, primMesh);
     }
-    exportFrameInfo(this, forwardRecords[i], subFolder + "info.txt");
+    exportFrameInfo(this, forwardRecords[i], subFolderPrefix + "/" + "info.txt");
   }
 
   writeStringToFile(OUTPUT_PARENT_FOLDER + "area.txt", areaTotalStr);
   std::printf("finished\n");
 }
 
-void Simulation::exportCurrentMeshPos(int frameIdx, std::string fileName) {
+void Simulation::exportCurrentMeshPos(int frameIdx, std::string fullFileName) {
   std::printf("[Simulation::exportCurrentMeshPos]\n");
-  MeshFileHandler::exportMeshPos(forwardRecords[frameIdx].x, fileName);
+  MeshFileHandler::exportMeshPos(forwardRecords[frameIdx].x, fullFileName);
 
   VecXd normals(particles.size() * 3);
   MeshFileHandler::saveOBJFile(
-      fileName, forwardRecords[frameIdx].x,
+      fullFileName, forwardRecords[frameIdx].x,
       getParticleNormals(mesh, forwardRecords[frameIdx].x), mesh);
 }
 
@@ -4027,7 +4025,7 @@ void Simulation::exportOptimizationRecords(Demos demoIdx,
                : (sceneConfig.name + "-" + currentTimestampToStr());
   std::printf("[Simulation::exportOptimizationRecords]\n");
   std::fflush(stdout);
-  std::string parentFolder = OUTPUT_PARENT_FOLDER + experimentName + "/";
+  std::string parentFolder = OUTPUT_PARENT_FOLDER + experimentName;
   checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
   checkFolderExistsAndCreate(parentFolder);
 
@@ -4046,8 +4044,9 @@ void Simulation::exportOptimizationRecords(Demos demoIdx,
     Simulation::ParamInfo &backwardParam = backwardOptimizationGuesses[i].first;
     std::string iterationFolder =
         OUTPUT_PARENT_FOLDER + experimentName + "/iter" + std::to_string(i);
+    std::printf("[Simulation::backwardOptimizationRecords] %s\n", iterationFolder.c_str());
     checkFolderExistsAndCreate(iterationFolder + "/");
-    exportSimulation(experimentName + "/iter" + std::to_string(i),
+    exportSimulation(iterationFolder,
                      backwardOptimizationRecords[i].first);
     writeStringToFile(iterationFolder + "/param.txt",
                       parameterToString(taskInfo, backwardParam));
@@ -4281,25 +4280,19 @@ void Simulation::exportStatsSimulations(
       }
 
     exportFrameInfo(this, records[i].second,
-                    subFolder + std::to_string(i) + "_" + "info.txt");
+                    subFolder + "/info.txt");
   }
 }
 
 void Simulation::exportSimulation(std::string fileName,
                                   std::vector<ForwardInformation> &records,
                                   bool staticPrimitivesFirstFrameOnly) {
-  std::printf("[Simulation::exportSimulation]\n");
-  std::string parentFolder = OUTPUT_PARENT_FOLDER + fileName + "/";
-
-  checkFolderExistsAndCreate(OUTPUT_PARENT_FOLDER);
+  std::printf("[Simulation::exportSimulation] %s\n", fileName.c_str());
+  std::string parentFolder = fileName + "/";
   checkFolderExistsAndCreate(parentFolder);
 
   for (int i = 0; i < records.size(); i++) {
-    std::string subFolder = fileName + "/";
-    std::string fullFolder = OUTPUT_PARENT_FOLDER + subFolder;
-
-    checkFolderExistsAndCreate(fullFolder);
-    MeshFileHandler::saveOBJFile(subFolder + std::to_string(i), records[i].x,
+    MeshFileHandler::saveOBJFile(parentFolder + std::to_string(i), records[i].x,
                                  mesh);
     if ((i == 0) && staticPrimitivesFirstFrameOnly)
       for (int primId = 0; primId < primitives.size(); primId++) {
@@ -4310,7 +4303,7 @@ void Simulation::exportSimulation(std::string fileName,
         std::string name = Primitive::primitiveTypeStrings[prim->type];
         prim->getMesh(primMesh, primPos, Vec3d(0, 0, 0), i);
         MeshFileHandler::saveOBJFile(
-            subFolder + std::to_string(primId + 1) + "-" + name, primPos,
+            parentFolder + std::to_string(primId + 1) + "-" + name, primPos,
             getParticleNormals(primMesh, primPos), primMesh);
       }
 
@@ -4324,12 +4317,12 @@ void Simulation::exportSimulation(std::string fileName,
         VecXd primPos;
         clip.getMesh(primMesh, primPos, clipCenter);
         MeshFileHandler::saveOBJFile(
-            subFolder + std::to_string(primitives.size() + fixedPointId + 1) +
+            parentFolder + std::to_string(primitives.size() + fixedPointId + 1) +
                 "-" + "CLIP",
             primPos, primMesh);
       }
 
-    exportFrameInfo(this, records[i], fileName + "info.txt");
+    exportFrameInfo(this, records[i], parentFolder + "info.txt");
   }
 }
 
