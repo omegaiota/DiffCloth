@@ -17,7 +17,7 @@ if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw/src")
     "by calling \"git submodule update --init --recursive\"")
 endif()
 
-set(NANOGUI_USE_GLAD_DEFAULT OFF)
+set(NANOGUI_USE_GLAD_DEFAULT ON)
 
 option(NANOGUI_BUILD_EXAMPLE "Build NanoGUI example application?" ON)
 option(NANOGUI_BUILD_SHARED  "Build NanoGUI as a shared library?" ON)
