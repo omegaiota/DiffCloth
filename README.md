@@ -1,60 +1,70 @@
 # DiffCloth
+
 Code repository for our paper [DiffCloth: Differentiable Cloth Simulation with Dry Frictional Contact](https://people.csail.mit.edu/liyifei/publication/diffcloth-differentiable-cloth-simulator/)
 ![](gifs/teaser.jpeg)
 
 [📃 Paper](https://people.csail.mit.edu/liyifei/uploads/diffcloth-highres-tog.pdf) | [🌍 Project](https://people.csail.mit.edu/liyifei/publication/diffcloth/)
 
 ### Tested Operating Systems
+
 Ubuntu 22.04 | Mac OS 12
 
 ### 1. Download the repo:
+
 **Make sure to use the `--recursive` option** to install the dependencies
 
 `git clone --recursive https://github.com/omegaiota/DiffCloth.git`
 
 ### 2. Build CPP code with Cmake:
+
 From the top directory:
+
 ```
 mkdir build
 cd build
 cmake ..
 make
 ```
+
 ### 3. Optimize/Visualize Section 6 Experiments:
 
-* Run optimization:
-    ```
-    ./DiffCloth -demo {demooptions} -mode optimize -seed {randseed}
-    ```
+- Run optimization:
 
-    where `{demooptions}` is the name of the demos from the following options and `{randseed}` is an integer for random initialization of the initial guesses
-    of the tasks.
+  ```
+  ./DiffCloth -demo {demooptions} -mode optimize -seed {randseed}
+  ```
 
-    The corresponding option for each of the experiments is:
-    * 6.1 T-shirt:  `tshirt`
-    * 6.1 Sphere: `sphere`
-    * 6.2 Hat: `hat`
-    * 6.2 Sock: `sock`
-    * 6.3 Dress: `dress`
+  where `{demooptions}` is the name of the demos from the following options and `{randseed}` is an integer for random initialization of the initial guesses
+  of the tasks.
 
-* Visualize optimization iters:
-    ```
-    ./DiffCloth -demo {demooptions} -mode visualize -exp {expName}
-    ```
+  The corresponding option for each of the experiments is:
 
-    where `{expName}` is the iteration folder for visualization. The code repo comes with an example optimization run of T-shirt in `output/tshirt-exampleopt/`, and you can visualize the first iteration with
+  - 6.1 T-shirt: `tshirt`
+  - 6.1 Sphere: `sphere`
+  - 6.2 Hat: `hat`
+  - 6.2 Sock: `sock`
+  - 6.3 Dress: `dress`
 
-     ```
-    ./DiffCloth -demo tshirt -mode visualize -exp tshirt-exampleopt/iter0/
-    ```
+- Visualize optimization iters:
 
+  ```
+  ./DiffCloth -demo {demooptions} -mode visualize -exp {expName}
+  ```
+
+  where `{expName}` is the iteration folder for visualization. The code repo comes with an example optimization run of T-shirt in `output/tshirt-exampleopt/`, and you can visualize the first iteration with
+
+  ```
+  ./DiffCloth -demo tshirt -mode visualize -exp tshirt-exampleopt/iter0/
+  ```
 
 The progress of the optimization is saved into the `output/` directory of the root folder. Intermediate progress are visualized using the custom written OpenGL viewer.
 
 ### Note
-Feel free to contact me at liyifei@csail.mit.edu or create a Github issue if you have questions regarding setting up the repository, running examples or adding new examples. 
+
+Feel free to contact me at liyifei@csail.mit.edu or create a Github issue if you have questions regarding setting up the repository, running examples or adding new examples.
 
 ### Citation
+
 Please consider citing our paper if your find our research or this codebase helpful:
 
     @article{Li2022diffcloth,
