@@ -9,9 +9,10 @@
 #include <dirent.h>
 #include <cstring>
 #include "Macros.h"
-#include <sys/stat.h>
+#include <cstring>
 #include <ctime>
 #include <iomanip>
+#include <sys/stat.h>
 
 
 static void insertIntoTriplets33(TripleVector& triplets, Eigen::Matrix<double, 3, 3> src, int startRow, int startCol) {
@@ -64,13 +65,9 @@ kronecker(const Eigen::Matrix<double, m, n> &A, const Eigen::Matrix<double, p, q
 
 }
 
-static void checkFolderExistsAndCreate(std::string path) {
-
-    if (mkdir(path.c_str(), 07777) != -1) {
-//      std::printf("directory created\n");
-
-    }
-
+static void checkFolderExistsAndCreate(std::string path)
+{
+  std::filesystem::create_directories(path);
 }
 
 typedef Eigen::Transform<double, 3, Eigen::Affine> Rotation;
@@ -87,58 +84,50 @@ static Rotation axisToRotation(Vec3d finalDir, Vec3d initialDir) {
   return rot;
 }
 
-static std::vector<std::string>  listFiles( std::string path, std::string extension) // extension = ".txt"
+static std::vector<std::string>
+listFiles(std::string path, std::string extension) // extension = ".txt"
 {
   std::vector<std::string> filePaths;
-  DIR* dirFile = opendir( path.c_str() );
-  if ( dirFile )
+  DIR *dirFile = opendir(path.c_str());
+  if (dirFile)
   {
-    struct dirent* hFile;
+    struct dirent *hFile;
     errno = 0;
-    while (( hFile = readdir( dirFile )) != NULL )
+    while ((hFile = readdir(dirFile)) != NULL)
     {
 
       // skip folder indices
-      if ( !strcmp( hFile->d_name, "."  )) continue;
-      if ( !strcmp( hFile->d_name, ".." )) continue;
+      if (!strcmp(hFile->d_name, "."))
+        continue;
+      if (!strcmp(hFile->d_name, ".."))
+        continue;
 
       // skip hidden files
-      if (  hFile->d_name[0] == '.' ) continue;
+      if (hFile->d_name[0] == '.')
+        continue;
 
-      char* find = std::strstr( hFile->d_name,  extension.c_str());
+      char *find = std::strstr(hFile->d_name, extension.c_str());
       if (find == NULL)
         continue;
-      if (  std::string(find) == extension ) {
+      if (std::string(find) == extension)
+      {
         filePaths.emplace_back(hFile->d_name);
       }
     }
-    closedir( dirFile );
+    closedir(dirFile);
   }
 
   return filePaths;
 }
 
-static std::vector<std::string>  listDirectory( std::string path)
+static std::vector<std::string> listDirectory(std::string path)
 {
   std::vector<std::string> filePaths;
-  DIR* dirFile = opendir( path.c_str() );
-  if ( dirFile )
+  for (const std::filesystem::directory_entry &entry :
+       std::filesystem::directory_iterator(path))
   {
-    struct dirent* hFile;
-    errno = 0;
-    while (( hFile = readdir( dirFile )) != NULL )
-    {
-      // skip folder indices
-      if ( !strcmp( hFile->d_name, "."  )) continue;
-      if ( !strcmp( hFile->d_name, ".." )) continue;
-
-      if (hFile->d_type == DT_DIR)
-        filePaths.emplace_back(hFile->d_name);
-
-    }
-    closedir(dirFile);
+    filePaths.emplace_back(entry.path().string());
   }
-
   return filePaths;
 }
 
@@ -253,12 +242,13 @@ static std::string lld2str(long long v, int precision = 2) {
   return streamObj3.str();
 }
 
-static void writeStringToFile(std::string fileName, std::string content) {
+
+static void writeStringToFile(std::string fileName, std::string content)
+{
   std::ofstream myfile;
   myfile.open(fileName.c_str(), std::ofstream::app);
   myfile << content;
   myfile.close();
-
 }
 
 #endif //OMEGAENGINE_UTILITYFUNCTIONS_H
