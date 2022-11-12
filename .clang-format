@@ -1,0 +1,7 @@
+# Format Style Options - Created with Clang Power Tools
+---
+AccessModifierOffset: -2
+AlignAfterOpenBracket: DontAlign
+BasedOnStyle: Google
+ColumnLimit: 120
+...

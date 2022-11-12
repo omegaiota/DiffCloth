@@ -2,23 +2,20 @@
 // Created by liyifei@csail.mit.edu on 6/18/21.
 //
 
-
 #include "RenderLoop.h"
-
 
 bool RenderLoop::initialized = false;
 Shader* RenderLoop::clothShader = nullptr;
 Shader* RenderLoop::simpleShader = nullptr;
 Viewer RenderLoop::viewer = Viewer(true);
 GLFWwindow* RenderLoop::glfwWindow = nullptr;
-void RenderLoop::renderRecordsForSystem(Simulation *system, std::vector<Simulation::ForwardInformation> &forwardRecords,
-                                        bool renderPosPairs, bool exitOnLastFrame, std::string text) {
-
+void RenderLoop::renderRecordsForSystem(Simulation* system, std::vector<Simulation::ForwardInformation>& forwardRecords,
+    bool renderPosPairs, bool exitOnLastFrame, std::string text) {
   if (!initialized) {
     viewer.perStepTrajectoryVisualization = true;
     viewer.renderPosPairs = renderPosPairs;
 
-    Simulation::SceneConfiguration &sceneConfig = system->sceneConfig;
+    Simulation::SceneConfiguration& sceneConfig = system->sceneConfig;
     viewer.camera.setCamPos(glm::vec3(sceneConfig.camPos[0], sceneConfig.camPos[1], sceneConfig.camPos[2]));
 
     viewer.camera.setLookAt(system->getLookAtPos(system, sceneConfig));
@@ -38,13 +35,6 @@ void RenderLoop::renderRecordsForSystem(Simulation *system, std::vector<Simulati
     glfwRestoreWindow(glfwWindow);
     glfwFocusWindow(glfwWindow);
   }
-
-
-
-
-
-
-
 
   int N = forwardRecords.size();
   int currentFrame = 0;
@@ -72,14 +62,12 @@ void RenderLoop::renderRecordsForSystem(Simulation *system, std::vector<Simulati
 
     viewer.screen->drawWidgets();
 
-
     glfwSwapBuffers(glfwWindow);
 
     glfwPollEvents();
 
-    currentFrame = std::min(currentFrame+1, N-1);
-    isLastFrame = currentFrame == N-1;
-
+    currentFrame = std::min(currentFrame + 1, N - 1);
+    isLastFrame = currentFrame == N - 1;
   }
-   glfwIconifyWindow(glfwWindow);
+  glfwIconifyWindow(glfwWindow);
 }

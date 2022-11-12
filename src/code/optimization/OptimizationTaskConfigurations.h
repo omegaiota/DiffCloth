@@ -10,22 +10,17 @@
 
 class OptimizationTaskConfigurations {
 public:
-    static Simulation::FabricConfiguration    normalFabric6lowres,   slopeFabricRestOnPlane,
-      conitnuousNormalTestFabric, tshirt1000,   agenthat579, sock482,  dressv7khandsUpDrape, sphereFabric,
-            normalFabric6;
+  static Simulation::FabricConfiguration normalFabric6lowres, slopeFabricRestOnPlane, conitnuousNormalTestFabric,
+      tshirt1000, agenthat579, sock482, dressv7khandsUpDrape, sphereFabric, normalFabric6;
 
+  static Simulation::SceneConfiguration simpleScene, rotatingSphereScene, windScene, tshirtScene, hatScene, sockScene,
+      dressScene, continousNormalScene, slopeSimplifiedScene;
 
-    static Simulation::SceneConfiguration simpleScene,   rotatingSphereScene, windScene,
-       tshirtScene,
-            hatScene,  sockScene, dressScene,
-         continousNormalScene, slopeSimplifiedScene;
+  static Simulation::TaskConfiguration demoSphere, demoTshirt, demoWInd, demoHat, demoSock, demoDress, demoWindSim2Real,
+      demoSlope;
+  static std::vector<Simulation::SceneConfiguration> sceneConfigArrays;
 
-    static Simulation::TaskConfiguration demoSphere, demoTshirt, demoWInd, demoHat, demoSock, demoDress, demoWindSim2Real, demoSlope;
-    static std::vector<Simulation::SceneConfiguration> sceneConfigArrays;
-
-    static std::map<int, Simulation::TaskConfiguration> demoNumToConfigMap;
-
+  static std::map<int, Simulation::TaskConfiguration> demoNumToConfigMap;
 };
 
-
-#endif //OMEGAENGINE_SIMULATIONCONSTANTS_H
+#endif  // OMEGAENGINE_SIMULATIONCONSTANTS_H

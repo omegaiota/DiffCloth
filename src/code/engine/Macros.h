@@ -7,33 +7,34 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #define GLFW_INCLUDE_NONE
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <thread>
-#include <chrono>
 #include <glad/glad.h>
+
+#include <chrono>
+#include <fstream>
 #include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <iostream>
+#include <sstream>
+#include <thread>
 
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 
-#include "../supports/Logging.h"
 #include <iomanip>
 
+#include "../supports/Logging.h"
 
-//#include <GLFW/glfw3.h>
-#include "stb_image.h"
-#include "Eigen/Core"
+// #include <GLFW/glfw3.h>
 #include <Eigen/Eigenvalues>
-
-#include <algorithm>
 #include <Eigen/Geometry>
 #include <Eigen/Sparse>
-#define ARRAY_COUNT(x) (sizeof(x) / sizeof( (x)[0] )  )
+#include <algorithm>
+
+#include "Eigen/Core"
+#include "stb_image.h"
+#define ARRAY_COUNT(x) (sizeof(x) / sizeof((x)[0]))
 
 #ifdef USE_DEBUG
 #define DEBUG_PRINTF(x) printf x
@@ -79,38 +80,38 @@ typedef Eigen::Matrix<double, 6, 4> Mat6x4d;
 typedef Eigen::Matrix<double, 6, 6> Mat6x6d;
 typedef Eigen::Matrix<double, 6, 9> Mat6x9d;
 typedef Eigen::Matrix<double, 9, 9> Mat9x9d;
-typedef std::pair<std::string,long long> TimerEntry;
+typedef std::pair<std::string, long long> TimerEntry;
 typedef std::vector<Eigen::Triplet<double>> TripleVector;
-    typedef Eigen::Transform<double, 3, Eigen::Affine> Rotation;
+typedef Eigen::Transform<double, 3, Eigen::Affine> Rotation;
 
 struct PerformanceTiming {
-    long long nonSolveTimeMicroseconds;
-    long long solveDirectMicroseconds;
-    long long solveIterativeMicroseconds;
+  long long nonSolveTimeMicroseconds;
+  long long solveDirectMicroseconds;
+  long long solveIterativeMicroseconds;
 };
 
 struct TimerContent {
-    std::vector<TimerEntry> timeMicroseconds;
-    long long totalMicroseconds;
-    PerformanceTiming solvePerfReport;
+  std::vector<TimerEntry> timeMicroseconds;
+  long long totalMicroseconds;
+  PerformanceTiming solvePerfReport;
 };
 
-struct AABB { // axis-aligned bounding box
-    Vec3d min;
-    Vec3d max;
+struct AABB {  // axis-aligned bounding box
+  Vec3d min;
+  Vec3d max;
 
-    AABB() {
-      min.setZero();
-      max.setZero();
-    }
+  AABB() {
+    min.setZero();
+    max.setZero();
+  }
 
-    AABB(Vec3d min, Vec3d max) : min(min), max(max) {};
+  AABB(Vec3d min, Vec3d max) : min(min), max(max){};
 };
 
-
-template <int n> struct Eig {
-    Eigen::Matrix<double, n, n> Q;
-    Eigen::Matrix<double, n, 1> l;
+template <int n>
+struct Eig {
+  Eigen::Matrix<double, n, n> Q;
+  Eigen::Matrix<double, n, 1> l;
 };
 typedef Eigen::MatrixXd MatXd;
 typedef Eigen::MatrixXi MatXi;
@@ -118,14 +119,13 @@ typedef Eigen::Triplet<double> Triplet;
 typedef Eigen::SparseMatrix<double> SpMat;
 
 struct DrawSurfObject {
-    float *vertices;
-    float *indices;
-    int vbSize;
-    int idSize;
+  float *vertices;
+  float *indices;
+  int vbSize;
+  int idSize;
 };
 
 const int OPENMP_ENABLED = true;
 #include <omp.h>
 
-
-#endif //OMEGAENGINE_MACROS_H
+#endif  // OMEGAENGINE_MACROS_H

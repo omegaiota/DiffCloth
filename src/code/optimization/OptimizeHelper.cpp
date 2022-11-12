@@ -4,8 +4,8 @@
 //
 
 #include "OptimizeHelper.h"
-#include "../engine/RenderLoop.h"
 
+#include "../engine/RenderLoop.h"
 
 VecXd OptimizeHelper::getLowerBound() {
   VecXd lb = paramLowerBound;
@@ -13,36 +13,36 @@ VecXd OptimizeHelper::getLowerBound() {
 }
 
 OptimizeHelper::OptimizeHelper(Demos demoNum, Simulation *system, Simulation::LossInfo &lossInfo,
-                               Simulation::BackwardTaskInformation &taskInfo, LossType lossType, int FORWARD_STEPS, Simulation::ParamInfo paramActual)
-        : demoNum(demoNum), system(system), lossInfo(lossInfo), taskInfo(taskInfo), lossType(lossType),
-          FORWARD_STEPS(FORWARD_STEPS),  param_actual(paramActual) {
-
-
-        for (int sysMatId = 0; sysMatId < system->sysMat.size(); sysMatId++) {
-            Simulation::SystemMatrix &sysMat = system->sysMat[sysMatId];
-            param_guess.controlPointSplines.emplace_back(sysMat.controlPointSplines);
-            for (int splineId = 0; splineId < sysMat.controlPointSplines.size(); splineId++) {
-                Spline &s = param_guess.controlPointSplines[sysMatId][splineId];
-                for (int segId = 0; segId < s.segments.size(); segId++) {
-                    {
-                        if (splineId < 2)
-                            s.moveEndPoint(segId, s.segments[segId].p0 + Vec3d(-1, 1, 0));
-                        else
-                            s.moveEndPoint(segId, s.segments[segId].p0 + Vec3d(1, 1, 0));
-                    }
-
-
-                }
-
-            }
+    Simulation::BackwardTaskInformation &taskInfo, LossType lossType, int FORWARD_STEPS,
+    Simulation::ParamInfo paramActual)
+    : demoNum(demoNum),
+      system(system),
+      lossInfo(lossInfo),
+      taskInfo(taskInfo),
+      lossType(lossType),
+      FORWARD_STEPS(FORWARD_STEPS),
+      param_actual(paramActual) {
+  for (int sysMatId = 0; sysMatId < system->sysMat.size(); sysMatId++) {
+    Simulation::SystemMatrix &sysMat = system->sysMat[sysMatId];
+    param_guess.controlPointSplines.emplace_back(sysMat.controlPointSplines);
+    for (int splineId = 0; splineId < sysMat.controlPointSplines.size(); splineId++) {
+      Spline &s = param_guess.controlPointSplines[sysMatId][splineId];
+      for (int segId = 0; segId < s.segments.size(); segId++) {
+        {
+          if (splineId < 2)
+            s.moveEndPoint(segId, s.segments[segId].p0 + Vec3d(-1, 1, 0));
+          else
+            s.moveEndPoint(segId, s.segments[segId].p0 + Vec3d(1, 1, 0));
         }
-    param_guess.mu.resize(taskInfo.mu_primitives.size());
+      }
+    }
+  }
+  param_guess.mu.resize(taskInfo.mu_primitives.size());
   hasGroundtruthParam = false;
   totalParamNumber = 0;
   totalSplineParamNumber = 0;
   setParameterBounds(taskInfo);
 }
-
 
 void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &taskInfo) {
   std::vector<std::pair<double, double>> bounds;
@@ -50,38 +50,30 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
     offset.offset_dL_dfwind = totalParamNumber;
     totalParamNumber += 5;
     for (int i = 0; i < 3; i++) {
-      bounds.emplace_back(-0.1, 0.1); // windForce
+      bounds.emplace_back(-0.1, 0.1);  // windForce
       paramLogScaleTransformOn.emplace_back(false);
       paramName.emplace_back("windForce");
     }
-    bounds.emplace_back(0.01, 15); // windFrequency
+    bounds.emplace_back(0.01, 15);  // windFrequency
     paramLogScaleTransformOn.emplace_back(windScale);
     paramName.emplace_back("windFreq");
 
-
-    bounds.emplace_back(-5, 5); // windPhase
+    bounds.emplace_back(-5, 5);  // windPhase
     paramLogScaleTransformOn.emplace_back(false);
     paramName.emplace_back("windPhase");
-
   }
-
 
   if (taskInfo.dL_dfext) {
     offset.offset_dL_dfext = totalParamNumber;
     totalParamNumber += 3;
     for (int i = 0; i < 3; i++) {
-      bounds.emplace_back(-3, 3); // windDir
+      bounds.emplace_back(-3, 3);  // windDir
       paramLogScaleTransformOn.emplace_back(false);
       paramName.emplace_back("windDir");
-
     }
   }
 
-
-  std::vector<std::pair<double, double>> stiffnessBounds = {{0,    200},
-                                                            {63,   10000},
-                                                            {80,   1500},
-                                                            {1e-7, 5}};
+  std::vector<std::pair<double, double>> stiffnessBounds = {{0, 200}, {63, 10000}, {80, 1500}, {1e-7, 5}};
 
   if (taskInfo.dL_dx0) {
     offset.offset_dL_dx0 = totalParamNumber;
@@ -89,18 +81,17 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
     for (int i = 0; i < system->particles.size(); i++) {
       for (int dim = 0; dim < 3; dim++) {
         bounds.emplace_back(system->sceneConfig.sceneBbox.min[dim],
-                            system->sceneConfig.sceneBbox.max[dim]); // windForce
+            system->sceneConfig.sceneBbox.max[dim]);  // windForce
       }
     }
   }
-
 
   if (taskInfo.dL_dconstantForceField) {
     offset.offset_dL_dconstantForceField = totalParamNumber;
     totalParamNumber += system->particles.size() * 3;
     for (int i = 0; i < system->particles.size(); i++) {
       for (int dim = 0; dim < 3; dim++) {
-        bounds.emplace_back(-10, 10); // constantForceField
+        bounds.emplace_back(-10, 10);  // constantForceField
       }
     }
   }
@@ -112,9 +103,7 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
       bounds.emplace_back(stiffnessBounds[i]);
       paramLogScaleTransformOn.emplace_back(stiffnessLogScale);
       paramName.emplace_back(CONSTRAINT_TYPE_STRINGS[i]);
-
     }
-
   }
 
   if (taskInfo.dL_density) {
@@ -137,7 +126,6 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
           bounds.emplace_back(splineBounds.first[i], splineBounds.second[i]);
           paramLogScaleTransformOn.emplace_back(false);
           paramName.emplace_back("spline");
-
         }
       }
     }
@@ -150,10 +138,8 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
       paramLogScaleTransformOn.emplace_back(false);
       totalParamNumber++;
       paramName.emplace_back("mu");
-
     }
   }
-
 
   paramLowerBound = VecXd(totalParamNumber);
   paramLowerBound.setZero();
@@ -167,9 +153,7 @@ void OptimizeHelper::setParameterBounds(Simulation::BackwardTaskInformation &tas
   param_mean = (paramLowerBound + paramUpperBound) * 0.5;
   param_scale = paramUpperBound - paramLowerBound;
   experimentName = currentTimestampToStr() + "-" + system->sceneConfig.name;
-
 }
-
 
 VecXd OptimizeHelper::getUpperBound() {
   VecXd ub = paramUpperBound;
@@ -181,11 +165,9 @@ VecXd OptimizeHelper::paramInfoToVecXd(Simulation::ParamInfo &param) {
   x.setZero();
   if (taskInfo.dL_dfwind) {
     x.segment(offset.offset_dL_dfwind, 5) = param.f_extwind;
-
   }
 
-  if (taskInfo.dL_dfext)
-    x.segment(offset.offset_dL_dfext, 3) = param.f_ext;
+  if (taskInfo.dL_dfext) x.segment(offset.offset_dL_dfext, 3) = param.f_ext;
 
   if (taskInfo.dL_dwindFactor) {
     x.segment(offset.offset_dL_dfwind_timestep, param_guess.f_ext_timestep.rows()) = param.f_ext_timestep;
@@ -199,7 +181,6 @@ VecXd OptimizeHelper::paramInfoToVecXd(Simulation::ParamInfo &param) {
     x.segment(offset.offset_dL_dconstantForceField, 3 * system->particles.size()) = param.f_constantForceField;
   }
 
-
   for (int i = 0; i < 4; i++) {
     if (taskInfo.dL_dk_pertype[i]) {
       x[offset.offset_dL_k[i]] = param.k_pertype[i];
@@ -209,7 +190,6 @@ VecXd OptimizeHelper::paramInfoToVecXd(Simulation::ParamInfo &param) {
   if (taskInfo.dL_density) {
     x[offset.offset_dL_density] = param.density;
   }
-
 
   if (taskInfo.dL_dmu) {
     for (int i = 0; i < taskInfo.mu_primitives.size(); i++) {
@@ -228,19 +208,16 @@ VecXd OptimizeHelper::paramInfoToVecXd(Simulation::ParamInfo &param) {
         VecXd splineParam = splineParams.segment(curSplineoffset, splineDOF);
         if (splineDOF != splineDOF2)
           std::printf("WARNING: spline param number mismatch %d %d\n", splineDOF, splineDOF2);
-        splineParams.segment(curSplineoffset,
-                             splineDOF) = param.controlPointSplines[sysMatId][splineId].paramToVector();
+        splineParams.segment(curSplineoffset, splineDOF) =
+            param.controlPointSplines[sysMatId][splineId].paramToVector();
         curSplineoffset += splineDOF;
       }
-
     }
 
     x.segment(offset.offset_dL_dspline, totalSplineParamNumber) = splineParams;
   }
   // x = 2 * (x_raw - mean) / scale
   // x_raw = 0.5 * x * scale + mean
-
-
 
   return x;
 }
@@ -253,12 +230,11 @@ VecXd OptimizeHelper::gradientInfoToVecXd(Simulation::BackwardInformation &backw
     if (windScale) {
       // TODO: removed scaling
     }
-
   }
 
   if (taskInfo.dL_dwindFactor) {
-    grad.segment(offset.offset_dL_dfwind_timestep,
-                 backwardInfo.dL_dwindtimestep.rows()) = backwardInfo.dL_dwindtimestep;
+    grad.segment(offset.offset_dL_dfwind_timestep, backwardInfo.dL_dwindtimestep.rows()) =
+        backwardInfo.dL_dwindtimestep;
   }
 
   if (taskInfo.dL_dx0) {
@@ -266,21 +242,20 @@ VecXd OptimizeHelper::gradientInfoToVecXd(Simulation::BackwardInformation &backw
   }
 
   if (taskInfo.dL_dconstantForceField) {
-    grad.segment(offset.offset_dL_dconstantForceField,
-                 3 * system->particles.size()) = backwardInfo.dL_dconstantForceField;
+    grad.segment(offset.offset_dL_dconstantForceField, 3 * system->particles.size()) =
+        backwardInfo.dL_dconstantForceField;
   }
 
-  if (taskInfo.dL_dfext)
-    grad.segment(offset.offset_dL_dfext, 3) = backwardInfo.dL_dfext;
+  if (taskInfo.dL_dfext) grad.segment(offset.offset_dL_dfext, 3) = backwardInfo.dL_dfext;
 
   for (int i = 0; i < 4; i++) {
     if (taskInfo.dL_dk_pertype[i]) {
-      grad[offset.offset_dL_k[i]] = backwardInfo.dL_dk_pertype[i];// Note: Removed scaling
+      grad[offset.offset_dL_k[i]] = backwardInfo.dL_dk_pertype[i];  // Note: Removed scaling
     }
   }
 
   if (taskInfo.dL_density) {
-    grad[offset.offset_dL_density] = backwardInfo.dL_ddensity; // TODO: removed scaling
+    grad[offset.offset_dL_density] = backwardInfo.dL_ddensity;  // TODO: removed scaling
   }
 
   if (taskInfo.dL_dmu) {
@@ -302,7 +277,7 @@ VecXd OptimizeHelper::gradientInfoToVecXd(Simulation::BackwardInformation &backw
         int splineDOF = param_guess.controlPointSplines[sysMatId][splineId].getParameterNumber();
         if (splineDOF != backwardInfo.dL_dsplines[sysMatId][splineId].rows())
           std::printf("WARNING: spline param number mismatch %d %zu\n", splineDOF,
-                      backwardInfo.dL_dsplines[sysMatId][splineId].rows());
+              backwardInfo.dL_dsplines[sysMatId][splineId].rows());
         splineParams.segment(curSplineOffset, splineDOF) = backwardInfo.dL_dsplines[sysMatId][splineId];
         curSplineOffset += splineDOF;
       }
@@ -326,7 +301,7 @@ std::pair<bool, VecXd> OptimizeHelper::parameterFromRandSeed(int randSeed) {
 
     // Force spline shapes to reduce init param space
     VecXd splineEndPointTranslation =
-            param.controlPointSplines[0][0].segments[0].p1 - param.controlPointSplines[0][0].segments[0].p0;
+        param.controlPointSplines[0][0].segments[0].p1 - param.controlPointSplines[0][0].segments[0].p0;
 
     param.controlPointSplines = initControlSplines;
     for (std::vector<Spline> &splines : param.controlPointSplines) {
@@ -335,7 +310,6 @@ std::pair<bool, VecXd> OptimizeHelper::parameterFromRandSeed(int randSeed) {
         s.moveEndPoint(0, s.segments[0].p0 + splineEndPointTranslation);
       }
     }
-
   }
 
   if (taskInfo.dL_dfext) {
@@ -349,7 +323,7 @@ std::pair<bool, VecXd> OptimizeHelper::parameterFromRandSeed(int randSeed) {
   }
 
   if (taskInfo.dL_dwindFactor) {
-    //TODO
+    // TODO
     Logging::logFatal("dL_dwindFactor not handled!!\n");
   }
 
@@ -366,7 +340,6 @@ Simulation::ParamInfo OptimizeHelper::vecXdToParamInfo(const VecXd &x) {
 
   if (taskInfo.dL_dwindFactor) {
     param.f_ext_timestep = x.segment(offset.offset_dL_dfwind_timestep, param_guess.f_ext_timestep.rows());
-
   }
 
   if (taskInfo.dL_dx0) {
@@ -377,9 +350,7 @@ Simulation::ParamInfo OptimizeHelper::vecXdToParamInfo(const VecXd &x) {
     param.f_constantForceField = x.segment(offset.offset_dL_dconstantForceField, 3 * system->particles.size());
   }
 
-
-  if (taskInfo.dL_dfext)
-    param.f_ext = x.segment(offset.offset_dL_dfext, 3);
+  if (taskInfo.dL_dfext) param.f_ext = x.segment(offset.offset_dL_dfext, 3);
 
   for (int i = 0; i < 4; i++) {
     if (taskInfo.dL_dk_pertype[i]) {
@@ -390,7 +361,6 @@ Simulation::ParamInfo OptimizeHelper::vecXdToParamInfo(const VecXd &x) {
   if (taskInfo.dL_density) {
     param.density = x[offset.offset_dL_density];
   }
-
 
   if (taskInfo.dL_dmu) {
     for (int i = 0; i < taskInfo.mu_primitives.size(); i++) {
@@ -406,15 +376,13 @@ Simulation::ParamInfo OptimizeHelper::vecXdToParamInfo(const VecXd &x) {
       for (int splineId = 0; splineId < system->sysMat[sysMatId].controlPointSplines.size(); splineId++) {
         int splineDOF = param_guess.controlPointSplines[sysMatId][splineId].getParameterNumber();
         VecXd splineParam = splineParams.segment(curSplinePos, splineDOF);
-        Spline splineFromParam = Spline::splineFromParam(param_guess.controlPointSplines[sysMatId][splineId],
-                                                         splineParam);
+        Spline splineFromParam =
+            Spline::splineFromParam(param_guess.controlPointSplines[sysMatId][splineId], splineParam);
         param.controlPointSplines[sysMatId].emplace_back(splineFromParam);
         curSplinePos += splineDOF;
       }
-
     }
   }
-
 
   return param;
 }
@@ -438,9 +406,7 @@ std::pair<VecXd, int> OptimizeHelper::clampParameter(VecXd &in) {
   }
 
   return std::make_pair(out, activeParam);
-
 }
-
 
 VecXd OptimizeHelper::getRandomParam(int randSeed) {
   std::srand(randSeed);
@@ -452,8 +418,7 @@ VecXd OptimizeHelper::getRandomParam(int randSeed) {
     std::cerr << "seed = " << seed << std::endl;
     std::pair<bool, VecXd> paramCandidate = parameterFromRandSeed(seed);
     x = paramCandidate.second;
-    if (!paramCandidate.first)
-      continue;
+    if (!paramCandidate.first) continue;
     Simulation::ParamInfo param = vecXdToParamInfo(x);
 
     bool isValid = true;
@@ -462,11 +427,11 @@ VecXd OptimizeHelper::getRandomParam(int randSeed) {
       // make sure splines are close, trajectory points are all in bound
       for (int s1 = 0; s1 < splineNum; s1++) {
         isValid = isValid && param.controlPointSplines[0][s1].isWithinBound(system->sceneConfig.sceneBbox);
-        if (!isValid)
-          break;
+        if (!isValid) break;
         for (int s2 = s1 + 1; s2 < splineNum; s2++) {
-          double dist = (param.controlPointSplines[0][s1].segments[0].p0 -
-                         param.controlPointSplines[0][s2].segments[0].p0).norm();
+          double dist =
+              (param.controlPointSplines[0][s1].segments[0].p0 - param.controlPointSplines[0][s2].segments[0].p0)
+                  .norm();
           if (!Spline::isClose(param.controlPointSplines[0][s1], param.controlPointSplines[0][s2], dist + 0.5l)) {
             isValid = false;
             break;
@@ -481,7 +446,6 @@ VecXd OptimizeHelper::getRandomParam(int randSeed) {
       std::cout << "  param upperBound:" << getUpperBound().transpose() << std::endl;
       std::cout << " starts with param:" << x.transpose() << std::endl;
       break;
-
     }
   }
   return x;
@@ -489,10 +453,8 @@ VecXd OptimizeHelper::getRandomParam(int randSeed) {
 
 bool OptimizeHelper::paramIsWithinBound(VecXd x) {
   for (int i = 0; i < totalParamNumber; i++) {
-    if (x[i] > paramUpperBound[i])
-      return false;
-    if (x[i] < paramLowerBound[i])
-      return false;
+    if (x[i] > paramUpperBound[i]) return false;
+    if (x[i] < paramLowerBound[i]) return false;
   }
   return true;
 }
@@ -500,19 +462,20 @@ bool OptimizeHelper::paramIsWithinBound(VecXd x) {
 double OptimizeHelper::runSimulationAndGetLoss(const VecXd &x) {
   Simulation::ParamInfo param = vecXdToParamInfo(x);
 
-  double loss = system->runBackwardTask(taskInfo, lossType, lossInfo, statistics, FORWARD_STEPS, param, true,
-                                        [&](const std::string &v) {}, false)[0].loss;
+  double loss = system
+                    ->runBackwardTask(
+                        taskInfo, lossType, lossInfo, statistics, FORWARD_STEPS, param, true,
+                        [&](const std::string &v) {}, false)[0]
+                    .loss;
   return loss;
 }
-
 
 std::vector<Simulation::BackwardInformation> OptimizeHelper::runSimulationAndGetLossAndGradients(const VecXd &x) {
   Simulation::ParamInfo param = vecXdToParamInfo(x);
 
-  return system->runBackwardTask(taskInfo, lossType, lossInfo, statistics, FORWARD_STEPS, param, false,
-                                 [&](const std::string &v) {}, false);
+  return system->runBackwardTask(
+      taskInfo, lossType, lossInfo, statistics, FORWARD_STEPS, param, false, [&](const std::string &v) {}, false);
 }
-
 
 Simulation::BackwardInformation OptimizeHelper::runSimulationAndGetLossAndGradient(const VecXd &x) {
   return runSimulationAndGetLossAndGradients(x)[0];
@@ -524,12 +487,10 @@ VecXd OptimizeHelper::getActualParam() {
   return paramInfoToVecXd(param_actual);
 }
 
-
 void OptimizeHelper::saveLastIter() {
   system->backwardOptimizationRecords.emplace_back(lastBacakwardOptRecord);
   system->backwardOptimizationGuesses.push_back(lastGuess);
-  system->exportStatistics((Demos) demoNum, statistics, taskInfo);
-
+  system->exportStatistics((Demos)demoNum, statistics, taskInfo);
 }
 
 double OptimizeHelper::operator()(const VecXd &x, VecXd &grad) {
@@ -539,29 +500,23 @@ double OptimizeHelper::operator()(const VecXd &x, VecXd &grad) {
 
   std::printf("Total parameters: %d\n", totalParamNumber);
   std::printf("Total frames: %d\n", system->sceneConfig.stepNum);
-  std::printf("timestep: %.4f / 1/%d\n", system->sceneConfig.timeStep,
-              (int) (1.0 / system->sceneConfig.timeStep));
+  std::printf("timestep: %.4f / 1/%d\n", system->sceneConfig.timeStep, (int)(1.0 / system->sceneConfig.timeStep));
 
   Simulation::ParamInfo param = vecXdToParamInfo(x);
-  Logging::logColor("LBFGS param:" + Simulation::parameterToString(taskInfo, param) + "\n",
-                    Logging::LogColor::MAGENTA);
+  Logging::logColor("LBFGS param:" + Simulation::parameterToString(taskInfo, param) + "\n", Logging::LogColor::MAGENTA);
 
-  std::vector<Simulation::BackwardInformation> backwardRecords = system->runBackwardTask(taskInfo,
-                                                                                         lossType,
-                                                                                         lossInfo,
-                                                                                         statistics,
-                                                                                         FORWARD_STEPS,
-                                                                                         param,
-                                                                                         false);
+  std::vector<Simulation::BackwardInformation> backwardRecords =
+      system->runBackwardTask(taskInfo, lossType, lossInfo, statistics, FORWARD_STEPS, param, false);
 
   RenderLoop::renderRecordsForSystem(system, system->forwardRecords, false, true,
-                                     "Set text here for whatever you need (only single line is supported): Visualization for pySimulations::runExample");
+      "Set text here for whatever you need (only single line is supported): Visualization for "
+      "pySimulations::runExample");
 
   lastBacakwardOptRecord = std::make_pair(system->forwardRecords, backwardRecords);
   lastGuess = std::make_pair(param, backwardRecords[0].loss);
   double loss = backwardRecords[0].loss;
   saveLastIter();
-  system->exportStatistics((Demos) demoNum, statistics, taskInfo);
+  system->exportStatistics((Demos)demoNum, statistics, taskInfo);
 
   Simulation::BackwardInformation gradient = backwardRecords[0];
   grad = gradientInfoToVecXd(gradient);
@@ -569,5 +524,4 @@ double OptimizeHelper::operator()(const VecXd &x, VecXd &grad) {
   system->linesearchRecords = system->forwardRecords;
   Logging::logOk("Loss is: " + d2str(loss, 8) + "\n");
   return loss;
-
 }

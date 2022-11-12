@@ -13,8 +13,8 @@ inline void printVec(const Vec4d& v, std::string s) {
 }
 
 inline void throwError(std::string message) {
-    std::cerr << "[Error] " << message << std::endl;
-    throw message;
+  std::cerr << "[Error] " << message << std::endl;
+  throw message;
 }
 
-#endif //OMEGAENGINE_DEBUG_H
+#endif  // OMEGAENGINE_DEBUG_H

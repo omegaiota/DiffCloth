@@ -1,20 +1,18 @@
 #include "Texture2D.h"
 
-Texture2D::Texture2D(std::string textureName)
-{
+Texture2D::Texture2D(std::string textureName) {
   glGenTextures(1, &textureID);
-	std::string  folderName;
-//#ifdef USING_MACBOOK
+  std::string folderName;
+  // #ifdef USING_MACBOOK
   folderName = "./src/assets/";
-//#else
-//  folderName = "../../../src/assets/";
-//#endif
-	folderName.append(textureName);
-	const char * path = folderName.c_str();
+  // #else
+  //   folderName = "../../../src/assets/";
+  // #endif
+  folderName.append(textureName);
+  const char* path = folderName.c_str();
 
   unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
-  if (data)
-  {
+  if (data) {
     GLenum format;
     if (nrComponents == 1)
       format = GL_RED;
@@ -33,11 +31,8 @@ Texture2D::Texture2D(std::string textureName)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     stbi_image_free(data);
-  }
-  else
-  {
+  } else {
     std::cout << "Texture failed to load at path: " << path << std::endl;
     stbi_image_free(data);
   }
-
 }
