@@ -51,13 +51,7 @@ make
   ./DiffCloth -demo {demooptions} -mode visualize -exp {expName}
   ```
 
-  where `{expName}` is the iteration folder for visualization. The code repo comes with an example optimization run of T-shirt in `output/tshirt-exampleopt/`, and you can visualize the first iteration with
-
-  ```
-  ./DiffCloth -demo tshirt -mode visualize -exp tshirt-exampleopt/iter0/
-  ```
-
-The progress of the optimization is saved into the `output/` directory of the root folder. Intermediate progress are visualized using the custom written OpenGL viewer.
+The progress of the optimization is saved into the `output/` directory of the root folder.
 
 ### Note
 
