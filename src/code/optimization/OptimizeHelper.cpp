@@ -4,7 +4,6 @@
 //
 
 #include "OptimizeHelper.h"
-#include "../engine/RenderLoop.h"
 
 VecXd OptimizeHelper::getLowerBound() {
   VecXd lb = paramLowerBound;

@@ -1,18 +1,12 @@
 
-#include "engine/Macros.h"
-#include "engine/Renderer.h"
-#include "engine/Shader.h"
 #include "engine/UtilityFunctions.h"
-#include "engine/Viewer.h"
 #include "optimization/BackwardTaskSolver.h"
 #include "optimization/OptimizationTaskConfigurations.h"
-#include "simulation/PySimulations.h"
 #include "simulation/Simulation.h"
 #include "supports/Logging.h"
 #include <mutex>
 #include <queue>
 using namespace glm;
-Viewer window;
 
 void runBackwardTask(int demoIdx, bool isRandom, int srandSeed) {
   Simulation::SceneConfiguration initSceneProfile =
@@ -22,21 +16,6 @@ void runBackwardTask(int demoIdx, bool isRandom, int srandSeed) {
 
   BackwardTaskSolver::solveDemo(
       clothSystem, [&](const std::string &v) {}, demoIdx, isRandom, srandSeed);
-
-  delete clothSystem;
-}
-
-void renderFromFolder(int demoIdx, std::string subFolder) {
-  Simulation::TaskConfiguration taskConfig =
-      OptimizationTaskConfigurations::demoNumToConfigMap[demoIdx];
-  Simulation *clothSystem =
-      Simulation::createSystem(taskConfig.scene, Vec3d(0, 0, 0), true);
-  clothSystem->resetForwardRecordsFromFolder(subFolder);
-
-  RenderLoop::renderRecordsForSystem(
-      clothSystem, clothSystem->forwardRecords, false, true,
-      "Set text here for whatever you need (only single line is supported): "
-      "Visualization for pySimulations::runExample");
 
   delete clothSystem;
 }
@@ -139,11 +118,7 @@ int main(int argc, char *argv[]) {
     } else if (demoName == "dress") {
       demo = Demos::DEMO_DRESS_TWIRL;
     }
-    if (mode == "visualize") {
-      checkCmdOptionExistsAndValid("-exp", expStr, {});
-      std::string expSubFolder = std::string(expStr);
-      renderFromFolder(demo, expSubFolder);
-    } else if (mode == "optimize") {
+    if (mode == "optimize") {
       checkCmdOptionExistsAndValid("-seed", randSeedStr, {});
       runBackwardTask(demo, true, std::atoi(randSeedStr));
     }

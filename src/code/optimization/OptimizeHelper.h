@@ -6,10 +6,7 @@
 #ifndef OMEGAENGINE_OPTIMIZEHELPER_H
 #define OMEGAENGINE_OPTIMIZEHELPER_H
 
-#include "../engine/Camera.h"
 #include "../engine/Macros.h"
-#include "../engine/Shader.h"
-#include "../engine/VertexArrayObject.h"
 #include "../simulation/Simulation.h"
 #include "OptimizationTaskConfigurations.h"
 

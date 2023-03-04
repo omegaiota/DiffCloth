@@ -6,11 +6,8 @@
 #ifndef OMEGAENGINE_BACKWARDTASKSOLVER_H
 #define OMEGAENGINE_BACKWARDTASKSOLVER_H
 
-#include "../engine/Camera.h"
 #include "../engine/Macros.h"
-#include "../engine/Shader.h"
 #include "../engine/UtilityFunctions.h"
-#include "../engine/VertexArrayObject.h"
 #include "../simulation/Simulation.h"
 #include "OptimizationTaskConfigurations.h"
 #include "OptimizeHelper.h"

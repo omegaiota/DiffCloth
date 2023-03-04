@@ -9,7 +9,6 @@
 #define GLFW_INCLUDE_NONE
 #include <chrono>
 #include <fstream>
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,9 +16,6 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
-
-#define GL_SILENCE_DEPRECATION
-#include <GLFW/glfw3.h>
 
 #include "../supports/Logging.h"
 #include <iomanip>
