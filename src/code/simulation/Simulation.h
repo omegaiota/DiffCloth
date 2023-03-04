@@ -16,6 +16,7 @@
 #include "Particle.h"
 #include "Primitive.h"
 #include "Spline.h"
+#include "Spring.h"
 #include "Triangle.h"
 #include "TriangleBending.h"
 #include <Eigen/Core>
@@ -165,7 +166,7 @@ public:
 		.dL_dfext = Vec3d(0, 0, 0),
 		.dL_dwind = MatXd::Zero(5, 1),
 		.dL_ddensity = 0.0,
-		.dL_dk_pertype = { 0.0, 0.0, 0.0 },
+		.dL_dk_pertype = { 0.0, 0.0, 0.0, 0.0 },
 		.dL_dsplines = {},
 		.dL_dmu = { { 0, 0 } },
 		.badMatrixCounter = 0,
@@ -425,6 +426,7 @@ public:
 	Timer timeSteptimer;
 
 	std::vector<Particle> particles;
+	std::vector<Spring> springs;
 	std::vector<Triangle> mesh;
 	std::vector<TriangleBending> bendingConstraints;
 	std::vector<std::vector<int>> particleTriangleMap;

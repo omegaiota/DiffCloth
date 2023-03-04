@@ -27,7 +27,7 @@ void BackwardTaskSolver::setWindSim2realInitialParams(
 	paramActual.f_extwind[4] = 0;
 	taskInfo.dL_dk_pertype[2] = true;
 	paramActual.k_pertype[2] = 3000.0;
-	taskInfo.dL_dk_pertype[2] = true;
+	taskInfo.dL_dk_pertype[3] = true;
 	paramActual.k_pertype[3] = 0.01;
 	taskInfo.dL_density = true;
 	paramActual.density = 0.15;
