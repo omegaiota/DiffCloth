@@ -22,12 +22,12 @@ double Simulation::windFrequency = 14;
 double Simulation::windPhase = 0;
 
 double *Simulation::k_stiff_arr[Constraint::CONSTRAINT_NUM] = {
-	&Spring::k_stiff, &AttachmentSpring::k_stiff, &Triangle::k_stiff,
+	&AttachmentSpring::k_stiff, &Triangle::k_stiff,
 	&TriangleBending::k_stiff
 };
 
 Simulation::BackwardTaskInformation Simulation::taskConfigDefault = {
-	.dL_dk_pertype = { false, false, false, false },
+	.dL_dk_pertype = { false, false, false },
 	.dL_density = false,
 	.dL_dfext = false,
 	.dL_dfwind = false,
@@ -2093,9 +2093,6 @@ void Simulation::createConstraints() {
 		setNum = sceneConfig.customAttachmentVertexIdx.size();
 	}
 	for (int setIdx = 0; setIdx < setNum; setIdx++) {
-		for (Spring &s : springs) {
-			sysMat[setIdx].constraints.push_back(&s);
-		}
 		for (Triangle &t : mesh)
 			sysMat[setIdx].constraints.push_back(&t); // triangle strain
 
@@ -2146,7 +2143,6 @@ void Simulation::createBendingConstraints() {
 
 void Simulation::clearConstraintsElementsAndRecords() {
 	particles.clear();
-	springs.clear();
 	bendingConstraints.clear();
 	mesh.clear();
 	for (SystemMatrix &matrices : sysMat) {
@@ -2630,16 +2626,6 @@ void Simulation::createClothMesh() {
 void Simulation::createClothMeshFromConfig() {
 	clearConstraintsElementsAndRecords();
 
-	auto createSpring = [=](int a, int b) {
-		if ((a < 0) || (b < 0))
-			return;
-		AssertDebug(a < particles.size());
-		AssertDebug(b < particles.size());
-		springs.emplace_back(
-				a, b, particles, Spring::k_stiff,
-				(particles[a].pos_rest - particles[b].pos_rest).norm());
-	};
-
 	int totalParticles =
 			sceneConfig.fabric.gridNumY * sceneConfig.fabric.gridNumX;
 	pointpointConnectionTable.resize(totalParticles,
@@ -2967,12 +2953,10 @@ void Simulation::initializePrefactoredMatrices() {
 	bool printInitDetails = false;
 	std::printf("precompute matrices + prefactorization... density is: %.3f "
 				"SceneConfigtimestep is :1/%d timeStepIs:%.3f : stiffness "
-				"is:(%.2f,%.2f,%.2f,%.2f)\n",
+				"is:(%.2f,%.2f,%.2f)\n",
 			sceneConfig.fabric.density, (int)(1.0 / sceneConfig.timeStep),
 			sceneConfig.timeStep, *(k_stiff_arr[0]), *(k_stiff_arr[1]),
-			*(k_stiff_arr[2]), *(k_stiff_arr[3])
-
-	);
+			*(k_stiff_arr[2]));
 
 	std::printf("precompute matrices + prefactorization...");
 	for (int sysMatId = 0; sysMatId < sysMat.size(); sysMatId++) {
