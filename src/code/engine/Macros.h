@@ -79,32 +79,34 @@ typedef std::vector<Eigen::Triplet<double>> TripleVector;
 typedef Eigen::Transform<double, 3, Eigen::Affine> Rotation;
 
 struct PerformanceTiming {
-  long long nonSolveTimeMicroseconds;
-  long long solveDirectMicroseconds;
-  long long solveIterativeMicroseconds;
+	long long nonSolveTimeMicroseconds;
+	long long solveDirectMicroseconds;
+	long long solveIterativeMicroseconds;
 };
 
 struct TimerContent {
-  std::vector<TimerEntry> timeMicroseconds;
-  long long totalMicroseconds;
-  PerformanceTiming solvePerfReport;
+	std::vector<TimerEntry> timeMicroseconds;
+	long long totalMicroseconds;
+	PerformanceTiming solvePerfReport;
 };
 
 struct AABB { // axis-aligned bounding box
-  Vec3d min;
-  Vec3d max;
+	Vec3d min;
+	Vec3d max;
 
-  AABB() {
-    min.setZero();
-    max.setZero();
-  }
+	AABB() {
+		min.setZero();
+		max.setZero();
+	}
 
-  AABB(Vec3d min, Vec3d max) : min(min), max(max){};
+	AABB(Vec3d min, Vec3d max) :
+			min(min), max(max){};
 };
 
-template <int n> struct Eig {
-  Eigen::Matrix<double, n, n> Q;
-  Eigen::Matrix<double, n, 1> l;
+template <int n>
+struct Eig {
+	Eigen::Matrix<double, n, n> Q;
+	Eigen::Matrix<double, n, 1> l;
 };
 typedef Eigen::MatrixXd MatXd;
 typedef Eigen::MatrixXi MatXi;
@@ -112,10 +114,10 @@ typedef Eigen::Triplet<double> Triplet;
 typedef Eigen::SparseMatrix<double> SpMat;
 
 struct DrawSurfObject {
-  float *vertices;
-  float *indices;
-  int vbSize;
-  int idSize;
+	float *vertices;
+	float *indices;
+	int vbSize;
+	int idSize;
 };
 
 const int OPENMP_ENABLED = true;

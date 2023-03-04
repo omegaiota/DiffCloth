@@ -9,12 +9,12 @@
 #include "Macros.h"
 
 inline void printVec(const Vec4d &v, std::string s) {
-  std::printf("%s: %.6f %.6f %.6f\n", s.c_str(), v[0], v[1], v[2]);
+	std::printf("%s: %.6f %.6f %.6f\n", s.c_str(), v[0], v[1], v[2]);
 }
 
 inline void throwError(std::string message) {
-  std::cerr << "[Error] " << message << std::endl;
-  throw message;
+	std::cerr << "[Error] " << message << std::endl;
+	throw message;
 }
 
 #endif // OMEGAENGINE_DEBUG_H
