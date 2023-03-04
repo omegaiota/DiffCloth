@@ -558,11 +558,6 @@ double OptimizeHelper::operator()(const VecXd &x, VecXd &grad) {
 			system->runBackwardTask(taskInfo, lossType, lossInfo, statistics,
 					FORWARD_STEPS, param, false);
 
-	// RenderLoop::renderRecordsForSystem(
-	//     system, system->forwardRecords, false, true,
-	//     "Set text here for whatever you need (only single line is supported): "
-	//     "Visualization for pySimulations::runExample");
-
 	lastBacakwardOptRecord =
 			std::make_pair(system->forwardRecords, backwardRecords);
 	lastGuess = std::make_pair(param, backwardRecords[0].loss);
