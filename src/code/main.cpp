@@ -100,8 +100,7 @@ int main(int argc, char *argv[]) {
 
   if (argc == 1) {
     Logging::logFatal(
-        "WARNING: No command line argument.\n Please specify -mode [optimize, "
-        "visualize] -demo [tshirt, sock, hat] -seed [number]\n");
+        "WARNING: No command line argument.\n Please specify -mode [optimize] -demo [tshirt, sock, hat] -seed [number]\n");
     Logging::logFatal("Exiting program...\n");
   } else {
     std::string mode = std::string(modeStr);
