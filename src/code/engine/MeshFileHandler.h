@@ -154,8 +154,6 @@ public:
 			os << "f " << idx[0] + 1 << " " << idx[1] + 1 << " " << idx[2] + 1
 			   << std::endl;
 		}
-
-		//      std::printf("success!\n");
 		os.close();
 	}
 
@@ -181,8 +179,6 @@ public:
 			os << "f " << idx[0] + 1 << " " << idx[1] + 1 << " " << idx[2] + 1
 			   << std::endl;
 		}
-
-		//      std::printf("success!\n");
 		os.close();
 	}
 
@@ -208,8 +204,6 @@ public:
 			os << "f " << idx[0] + 1 << " " << idx[1] + 1 << " " << idx[2] + 1
 			   << std::endl;
 		}
-
-		//      std::printf("success!\n");
 		os.close();
 	}
 
@@ -236,14 +230,11 @@ public:
 			   << std::endl;
 		}
 
-		//      for ( int i = 0; i < normals.rows() / 3; i++)
-		//      {
-		//        Vec3d n = normals.segment(i * 3, 3);
-		//
-		//        os << "vn " << n[0] << " " << n[1] << " " << n[2] << std::endl;
-		//      }
+		for (int i = 0; i < normals.rows() / 3; i++) {
+			Vec3d n = normals.segment(i * 3, 3);
 
-		//      std::printf("success!\n");
+			os << "vn " << n[0] << " " << n[1] << " " << n[2] << std::endl;
+		}
 		os.close();
 	}
 
@@ -264,8 +255,6 @@ public:
 			myfile << std::fixed << std::setprecision(precision) << pos[0] << " "
 				   << pos[1] << " " << pos[2] << "\n";
 		}
-
-		//      std::printf("success!\n");
 		myfile.close();
 	}
 };
