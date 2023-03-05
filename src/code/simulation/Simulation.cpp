@@ -1243,106 +1243,81 @@ void Simulation::step() {
 							(sceneConfig.timeStep * sceneConfig.timeStep) +
 					M_times_sn;
 			timeSteptimer.toc();
-
-			enum PD_VERSION {
-				VELOCITY_BASED, // formulation from LY 20, includes dry frictional
-								// contact
-				POSITION_BASED // formulation from Bouaziz 14, does not include friction
-							   // calculation
-			};
+			
 			double deltav_prim_changes = 0;
 			std::pair<VecXd, VecXd> collisionResults;
-			PD_VERSION pdVersion = VELOCITY_BASED;
-			switch (pdVersion) {
-				case POSITION_BASED: {
-					x_new = sysMat[currentSysmatId].solver.solve(b);
-					newEnergy = evaluateEnergy(x_new);
-					v_new = (x_new - x_n) / sceneConfig.timeStep;
+			timeSteptimer.tic("b_tilde and f");
+			VecXd b_tilde = (b - P_times_xn) / sceneConfig.timeStep;
+			f = b_tilde - sysMat[currentSysmatId].C * v_now;
+			VecXd r_prim(3 * primitives.size());
+			timeSteptimer.toc();
 
-					for (Particle &p : particles) {
-						p.pos = x_new.segment(p.idx * 3, 3);
-						p.velocity = v_new.segment(p.idx * 3, 3);
-					}
-					break;
+			if (contactEnabled) {
+				if (iterIdx == 0) {
+					detectionInfos = collisionDetection(x_n, v_now, xnew_n_primitives,
+							v_n_primitives);
 				}
+				timeSteptimer.tic("calc r");
+				collisionResults = calculateDryFrictionVector(f, detectionInfos);
+				r = collisionResults.first;
+				r_prim = collisionResults.second;
+				timeSteptimer.toc();
+			} else {
+				r.setZero();
+				r_prim.setZero();
+			}
+			timeSteptimer.tic("solve and update");
+			v_new = sysMat[currentSysmatId].solver.solve(b_tilde + r);
+			x_new = v_new * sceneConfig.timeStep + x_n;
 
-				case VELOCITY_BASED: {
-					timeSteptimer.tic("b_tilde and f");
-					VecXd b_tilde = (b - P_times_xn) / sceneConfig.timeStep;
-					f = b_tilde - sysMat[currentSysmatId].C * v_now;
-					VecXd r_prim(3 * primitives.size());
-					timeSteptimer.toc();
+			timeSteptimer.toc();
 
-					if (contactEnabled) {
-						if (iterIdx == 0) {
-							detectionInfos = collisionDetection(x_n, v_now, xnew_n_primitives,
-									v_n_primitives);
-						}
-						timeSteptimer.tic("calc r");
-						collisionResults = calculateDryFrictionVector(f, detectionInfos);
-						r = collisionResults.first;
-						r_prim = collisionResults.second;
-						timeSteptimer.toc();
-					} else {
-						r.setZero();
-						r_prim.setZero();
-					}
-					timeSteptimer.tic("solve and update");
-					v_new = sysMat[currentSysmatId].solver.solve(b_tilde + r);
-					x_new = v_new * sceneConfig.timeStep + x_n;
-
-					timeSteptimer.toc();
-
-					bool testvbased_vs_xbased = false;
-					if (testvbased_vs_xbased) {
-						VecXd x_new2 = sysMat[currentSysmatId].solver.solve(
-								b + sceneConfig.timeStep * r);
-						VecXd diff = x_new - x_new2;
-						std::printf("xnew1: %.6f xnew2: %.6f diff: %.6f error: %.6f\n",
-								x_new.norm(), x_new2.norm(), diff.norm(),
-								std::abs(diff.dot(x_now.cwiseInverse()) / diff.rows()));
-					}
+			bool testvbased_vs_xbased = false;
+			if (testvbased_vs_xbased) {
+				VecXd x_new2 = sysMat[currentSysmatId].solver.solve(
+						b + sceneConfig.timeStep * r);
+				VecXd diff = x_new - x_new2;
+				std::printf("xnew1: %.6f xnew2: %.6f diff: %.6f error: %.6f\n",
+						x_new.norm(), x_new2.norm(), diff.norm(),
+						std::abs(diff.dot(x_now.cwiseInverse()) / diff.rows()));
+			}
 
 #ifdef DEBUG_EXPLOSION
-					x_newAndErrors.emplace_back(
-							std::make_pair(x_new, P * x_new - (b_tilde + r)));
-					fAndRs.emplace_back(std::make_pair(f, r));
+			x_newAndErrors.emplace_back(
+					std::make_pair(x_new, P * x_new - (b_tilde + r)));
+			fAndRs.emplace_back(std::make_pair(f, r));
 #endif
 
-					timeSteptimer.tic("step primitives");
-					if (false) {
-						VecXd delta_v_primitives_new =
-								(f_primitives * sceneConfig.timeStep + r_prim)
-										.cwiseProduct(m_primitivesinv);
-						deltav_prim_changes =
-								(delta_v_primitives_new - delta_v_primitives).norm();
-						delta_v_primitives = delta_v_primitives_new;
+			timeSteptimer.tic("step primitives");
+			if (false) {
+				VecXd delta_v_primitives_new =
+						(f_primitives * sceneConfig.timeStep + r_prim)
+								.cwiseProduct(m_primitivesinv);
+				deltav_prim_changes =
+						(delta_v_primitives_new - delta_v_primitives).norm();
+				delta_v_primitives = delta_v_primitives_new;
 
-						vnew_n_primitives = v_n_primitives + delta_v_primitives;
-						xnew_n_primitives =
-								x_n_primitives + sceneConfig.timeStep * vnew_n_primitives;
-						for (int i = 0; i < primitives.size(); i++) {
-							Primitive *prim = primitives[i];
-							if (contactEnabled && prim->isEnabled && (!prim->isStaitc)) {
-								prim->velocity = vnew_n_primitives.segment(i * 3, 3);
-								prim->center = xnew_n_primitives.segment(i * 3, 3);
-							}
-						}
+				vnew_n_primitives = v_n_primitives + delta_v_primitives;
+				xnew_n_primitives =
+						x_n_primitives + sceneConfig.timeStep * vnew_n_primitives;
+				for (int i = 0; i < primitives.size(); i++) {
+					Primitive *prim = primitives[i];
+					if (contactEnabled && prim->isEnabled && (!prim->isStaitc)) {
+						prim->velocity = vnew_n_primitives.segment(i * 3, 3);
+						prim->center = xnew_n_primitives.segment(i * 3, 3);
 					}
-					timeSteptimer.toc();
-					timeSteptimer.tic("update");
-
-					//            #pragma omp parallel for if (OPENMP_ENABLED)
-					for (int i = 0; i < particles.size(); i++) {
-						Particle &p = particles[i];
-						p.velocity = v_new.segment(p.idx * 3, 3);
-						p.pos = x_new.segment(p.idx * 3, 3);
-					}
-					timeSteptimer.toc();
-
-					break;
 				}
 			}
+			timeSteptimer.toc();
+			timeSteptimer.tic("update");
+
+			//            #pragma omp parallel for if (OPENMP_ENABLED)
+			for (int i = 0; i < particles.size(); i++) {
+				Particle &p = particles[i];
+				p.velocity = v_new.segment(p.idx * 3, 3);
+				p.pos = x_new.segment(p.idx * 3, 3);
+			}
+			timeSteptimer.toc();
 
 			timeSteptimer.tic("Convergence Test and Cleanup");
 			double x_diff = ((x_new - x_now).norm() * (1.0 / particles.size()));
