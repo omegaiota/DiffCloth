@@ -365,7 +365,7 @@ Simulation::SceneConfiguration OptimizationTaskConfigurations::sockScene{
 	.camPos = Vec3d(-32.19, 28.88, 11.32),
 	.sockLegOrientation = Vec3d(0, 1, 0),
 	.sceneBbox = AABB(Vec3d(-7, -5, -7), Vec3d(7, 15, 6)),
-	.timeStep = 1.0 / 160.0,
+	.timeStep = 1.0 / 320.0,
 	.stepNum = 400,
 	.forwardConvergenceThresh = 1e-9,
 	.backwardConvergenceThresh = 5e-4,
