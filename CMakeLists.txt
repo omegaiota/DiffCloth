@@ -16,19 +16,19 @@ if (APPLE)
     set(ENV{LDFLAGS} "-L/usr/local/opt/libomp/lib")
     set(ENV{CPPFLAGS} "-I/usr/local/opt/libomp/include")
 
+    # Set OpenMP flags and libraries before find_package
+    set(OpenMP_C "${CMAKE_C_COMPILER}")
+    set(OpenMP_C_FLAGS "-Xclang -fopenmp -I/usr/local/Cellar/libomp/16.0.6/include")
+    set(OpenMP_C_LIB_NAMES "libomp")
+    set(OpenMP_libomp_LIBRARY "omp")
+
+    set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
+    set(OpenMP_CXX_FLAGS "-Xclang -fopenmp -I/usr/local/Cellar/libomp/16.0.6/include")
+    set(OpenMP_CXX_LIB_NAMES "libomp")
+    set(OpenMP_libomp_LIBRARY "omp")
     set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
 
-    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_C "${CMAKE_C_COMPILER}" CACHE STRING "" FORCE)
-        set(OpenMP_C_FLAGS "-Xpreprocessor  -fopenmp -lomp -Wno-unused-command-line-argument" CACHE STRING "" FORCE)
-
-    endif()
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_CXX "${CMAKE_CXX_COMPILER}" CACHE STRING "" FORCE)
-        set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -Wno-unused-command-line-argument -I/usr/local/opt/libomp/include" CACHE STRING "" FORCE)
-
-    endif()
-
+    link_directories("/usr/local/Cellar/libomp/16.0.6/lib/")
 endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
@@ -45,6 +45,18 @@ find_package(OpenMP REQUIRED)
 if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(OpenMP_C "${CMAKE_C_COMPILER}")
+ 	set(OpenMP_C_FLAGS "-Xclang -fopenmp -I/usr/local/Cellar/libomp/16.0.6/include")
+ 	set(OpenMP_C_LIB_NAMES "libomp")
+ 	set(OpenMP_libomp_LIBRARY "omp")
+
+ 	set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
+ 	set(OpenMP_CXX_FLAGS "-Xclang -fopenmp -I/usr/local/Cellar/libomp/16.0.6/include")
+ 	set(OpenMP_CXX_LIB_NAMES "libomp")
+ 	set(OpenMP_libomp_LIBRARY "omp")
+    set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib")
+
+ 	link_directories("/usr/local/Cellar/libomp/16.0.6/lib/")
 endif()
 
 #if (APPLE)
@@ -92,6 +104,7 @@ file(GLOB SRCFILES "src/code/main.cpp" "src/code/*.h" "src/code/*.c" "src/code/e
 source_group("Sources" FILES ${SRCFILES})
 add_executable(${EXECUTABLE_NAME} ${SRCFILES}  )
 
+target_link_directories(${PROJECT_NAME} PRIVATE "/usr/local/Cellar/libomp/16.0.6/lib/")
 target_link_libraries(${EXECUTABLE_NAME} OpenMP::OpenMP_CXX)
 target_include_directories(${EXECUTABLE_NAME} PRIVATE ${EXTERNAL_HEADER})
 
