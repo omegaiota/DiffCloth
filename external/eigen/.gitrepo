@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://gitlab.com/libeigen/eigen.git
+	branch = 1c013be2cc6a999268be2f25575cd6a07bd52c45
+	commit = 1c013be2cc6a999268be2f25575cd6a07bd52c45
+	parent = b4d08cb3c6e1ee16bdcc3113666eccd3483b7248
+	method = merge
+	cmdver = 0.4.6
