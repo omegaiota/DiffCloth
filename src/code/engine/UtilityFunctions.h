@@ -7,10 +7,10 @@
 #define OMEGAENGINE_UTILITYFUNCTIONS_H
 
 #include "Macros.h"
-#include <dirent.h>
 #include <sys/stat.h>
 #include <cstring>
 #include <ctime>
+#include <filesystem>
 #include <iomanip>
 
 static void insertIntoTriplets33(TripleVector &triplets,
@@ -90,33 +90,13 @@ static Rotation axisToRotation(Vec3d finalDir, Vec3d initialDir) {
 static std::vector<std::string>
 listFiles(std::string path, std::string extension) // extension = ".txt"
 {
-	std::vector<std::string> filePaths;
-	DIR *dirFile = opendir(path.c_str());
-	if (dirFile) {
-		struct dirent *hFile;
-		errno = 0;
-		while ((hFile = readdir(dirFile)) != NULL) {
-			// skip folder indices
-			if (!strcmp(hFile->d_name, "."))
-				continue;
-			if (!strcmp(hFile->d_name, ".."))
-				continue;
-
-			// skip hidden files
-			if (hFile->d_name[0] == '.')
-				continue;
-
-			char *find = std::strstr(hFile->d_name, extension.c_str());
-			if (find == NULL)
-				continue;
-			if (std::string(find) == extension) {
-				filePaths.emplace_back(hFile->d_name);
-			}
-		}
-		closedir(dirFile);
-	}
-
-	return filePaths;
+    std::vector<std::string> filePaths;
+    for (const auto &entry : std::filesystem::directory_iterator(path)) {
+        if (entry.path().extension() == extension) {
+            filePaths.push_back(entry.path().string());
+        }
+    }
+    return filePaths;
 }
 
 static std::vector<std::string> listDirectory(std::string path) {
