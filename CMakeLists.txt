@@ -8,8 +8,8 @@ message(STATUS "set env var")
 
 # Properly setting environment variables for Apple Clang
 if (APPLE)
-    include_directories("/usr/local/include" "/usr/local/opt/llvm/include")
-    link_directories("/usr/local/lib" "/usr/local/opt/llvm/lib")
+    include_directories("/usr/local/include" "/usr/local/opt/llvm/include" "/opt/homebrew/opt/libomp/include")
+    link_directories("/usr/local/lib" "/usr/local/opt/llvm/lib" "/opt/homebrew/opt/libomp/lib")
 
     set(ENV{CC} "/usr/local/opt/llvm/bin/clang")
     set(ENV{CXX} "/usr/local/opt/llvm/bin/clang-omp++")
