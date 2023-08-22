@@ -14,6 +14,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            asset_name: DiffCloth-linux-x86_64.zip
+          - os: windows-latest
+            asset_name: DiffCloth-windows-x86_64.zip
+          - os: macos-latest
+            asset_name: DiffCloth-macos-x86_64.zip
 
     steps:
       - uses: actions/checkout@v2
@@ -50,7 +57,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: DiffCloth
+          name: ${{ matrix.asset_name }}
           path: build/DiffCloth
 
   release:
@@ -58,10 +65,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      - name: Download Artifact
+      - name: Download Artifacts
         uses: actions/download-artifact@v2
-        with:
-          name: DiffCloth
 
       - name: Create Release
         id: create_release
@@ -74,13 +79,27 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Release Assets
+        uses: actions/github-script@v3
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./DiffCloth
-          asset_name: DiffCloth
-          asset_content_type: application/octet-stream
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const artifacts = ['DiffCloth-linux-x86_64.zip', 'DiffCloth-windows-x86_64.zip', 'DiffCloth-macos-x86_64.zip'];
+            for (const artifact of artifacts) {
+              const filePath = path.join(process.env.GITHUB_WORKSPACE, artifact);
+              if (fs.existsSync(filePath)) {
+                await github.repos.uploadReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: context.payload.release.id,
+                  name: path.basename(artifact),
+                  data: fs.readFileSync(filePath),
+                  headers: {
+                    'content-length': fs.statSync(filePath).size,
+                    'content-type': 'application/zip',
+                  },
+                });
+              }
+            }
