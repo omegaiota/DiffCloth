@@ -2,11 +2,11 @@ name: CMake Build and Release
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
     tags:
-      - '*'
+      - "*"
   pull_request:
-    branches: [ master ]
+    branches: [main]
 
 jobs:
   build:
@@ -16,63 +16,71 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        if [[ "$RUNNER_OS" == "Windows" ]]; then
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-        elif [[ "$RUNNER_OS" == "Linux" ]]; then
-          sudo apt-get install -y cmake
-        elif [[ "$RUNNER_OS" == "macOS" ]]; then
-          brew install cmake
-        fi
+      - name: Install dependencies
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+            choco install mingw
+          elif [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt-get install -y cmake
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install cmake
+          fi
 
-    - name: Create Build Directory
-      run: mkdir build
+      - name: Create Build Directory
+        run: mkdir build
 
-    - name: Configure CMake
-      working-directory: build
-      run: cmake ..
+      - name: Configure CMake
+        working-directory: build
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            cmake .. -G "MinGW Makefiles"
+          else
+            cmake ..
+          fi
 
-    - name: Build
-      working-directory: build
-      run: cmake --build . --config Release
+      - name: Build
+        working-directory: build
+        run: cmake --build . --config Release
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: DiffCloth
-        path: build/DiffCloth
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: DiffCloth
+          path: build/DiffCloth
 
   release:
     needs: build
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: DiffCloth
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: DiffCloth
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./DiffCloth
-        asset_name: DiffCloth
-        asset_content_type: application/octet-stream
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./DiffCloth
+          asset_name: DiffCloth
+          asset_content_type: application/octet-stream
