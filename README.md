@@ -13,10 +13,6 @@ Ubuntu 22.04 | Mac OS 12
 
 ### 1. Download the repo:
 
-**Make sure to use the `--recursive` option** to install the dependencies
-
-`git clone --recursive https://github.com/omegaiota/DiffCloth.git`
-
 ### 2. Build CPP code with Cmake:
 
 From the top directory:
@@ -41,11 +37,11 @@ make
 
   The corresponding option for each of the experiments is:
 
-  - 6.1 T-shirt: `tshirt`
-  - 6.1 Sphere: `sphere`
-  - 6.2 Hat: `hat`
-  - 6.2 Sock: `sock`
-  - 6.3 Dress: `dress`
+  - T-shirt: `tshirt`
+  - Sphere: `sphere`
+  - Hat: `hat`
+  - Sock: `sock`
+  - Dress: `dress`
 
 - Visualize optimization iters:
 
