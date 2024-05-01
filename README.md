@@ -1,6 +1,3 @@
-# Counters (starts trakcing May 1 2024)
-  [![HitCount](https://hits.dwyl.com/omegaiota/DiffCloth.svg?style=flat-square)](http://hits.dwyl.com/omegaiota/DiffCloth)
-[![Github All Releases](https://img.shields.io/github/downloads/omegaiota/DiffCloth/total.svg)]()
 
 # DiffCloth
 Code repository for our paper [DiffCloth: Differentiable Cloth Simulation with Dry Frictional Contact](https://people.csail.mit.edu/liyifei/publication/diffcloth-differentiable-cloth-simulator/)
@@ -95,3 +92,7 @@ Please consider citing our paper if your find our research or this codebase help
     numpages = {20},
     keywords = {differentiable simulation, cloth simulation, Projective Dynamics}
     }
+
+# Counters (starts trakcing May 1 2024)
+  [![HitCount](https://hits.dwyl.com/omegaiota/DiffCloth.svg?style=flat-square)](http://hits.dwyl.com/omegaiota/DiffCloth)
+[![Github All Releases](https://img.shields.io/github/downloads/omegaiota/DiffCloth/total.svg)]()
