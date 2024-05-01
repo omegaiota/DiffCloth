@@ -93,6 +93,6 @@ Please consider citing our paper if your find our research or this codebase help
     keywords = {differentiable simulation, cloth simulation, Projective Dynamics}
     }
 
-# Counters (starts trakcing May 1 2024)
+### Counters (starts trakcing May 1 2024)
   [![HitCount](https://hits.dwyl.com/omegaiota/DiffCloth.svg?style=flat-square)](http://hits.dwyl.com/omegaiota/DiffCloth)
 [![Github All Releases](https://img.shields.io/github/downloads/omegaiota/DiffCloth/total.svg)]()
